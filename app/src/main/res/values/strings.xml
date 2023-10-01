@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GCC</string>
+    <string name="login_button">Login</string>
+    <string name="creatAccount_button">Create Account</string>
 </resources>
