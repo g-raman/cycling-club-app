@@ -3,7 +3,12 @@ package com.example.gcc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.view.View;
+import android.widget.TextView;
 
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,19 +33,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
+
+
     }
 
     private boolean validateField(String field, String regex) {
         return field.equals(regex);
     }
 
-    public Result register(String email, String password, String role) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference newUserRole = db.getReference("users/" + email + "/role");
-        DatabaseReference newUserPassword = db.getReference("users/" + email + "/password");
+    public void tryRegister(View view){
+        Boolean tryToRegister = registerUser(view);
+        if (tryToRegister==true) {
+            System.out.println("l8r");
+        }
+        System.out.println("epic fail");
+    }
 
-        newUserRole.setValue(role);
-        newUserPassword.setValue(password);
+    private Boolean registerUser(View view) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+        EditText emailText =findViewById(R.id.editEmailAddress);
+        EditText passText =findViewById(R.id.editPassword);
+
+        String email = String.valueOf(Double.parseDouble(emailText.getText().toString()));
+        String pass = String.valueOf(Double.parseDouble(passText.getText().toString()));
+
+
+        DatabaseReference newUserRole = db.getReference("users/"+email+"/role");
+        DatabaseReference newUserPassword = db.getReference("users/"+email+"/password");
+
+        newUserPassword.setValue(pass);
+
+        return true;
         //new stuff l8r
     }
 }

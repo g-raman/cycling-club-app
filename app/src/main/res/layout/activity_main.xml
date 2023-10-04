@@ -38,8 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="281dp"
             android:scaleType="centerCrop"
-            android:src="@tools:sample/avatars"
-            app:srcCompat="@drawable/Biking" />
+            android:src="@drawable/biking" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,6 +114,7 @@
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="tryRegister"
             android:text="@string/creatAccount_button"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
