@@ -104,11 +104,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/accounttype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Club Owner/ Participent"
-            android:textAlignment="textEnd" />
+            android:text="Participent"
+            android:textAlignment="viewStart" />
 
         <LinearLayout
             android:layout_width="match_parent"
