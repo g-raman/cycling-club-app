@@ -42,8 +42,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
 
-
-    // Add the dependency for the Realtime Database library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-database")
+    implementation ("com.google.firebase:firebase-storage")
+    implementation ("com.google.firebase:firebase-analytics")
+    implementation ("com.google.firebase:firebase-firestore")
 }

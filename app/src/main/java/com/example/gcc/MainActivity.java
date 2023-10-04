@@ -43,21 +43,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tryRegister(View view){
-        Boolean tryToRegister = registerUser(view);
+        Boolean tryToRegister = registerUser();
         if (tryToRegister==true) {
             System.out.println("l8r");
+        } else {
+            System.out.println("epic fail");
         }
-        System.out.println("epic fail");
+
     }
 
-    private Boolean registerUser(View view) {
+    private Boolean registerUser() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
 
         EditText emailText =findViewById(R.id.editEmailAddress);
         EditText passText =findViewById(R.id.editPassword);
 
-        String email = String.valueOf(Double.parseDouble(emailText.getText().toString()));
-        String pass = String.valueOf(Double.parseDouble(passText.getText().toString()));
+        String email = ((emailText.getText().toString()));
+        String pass = ((passText.getText().toString()));
 
 
         DatabaseReference newUserRole = db.getReference("users/"+email+"/role");
