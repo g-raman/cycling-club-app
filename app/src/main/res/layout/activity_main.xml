@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" Grimpeurs Cycling Club"
+            android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <LinearLayout
@@ -49,7 +50,7 @@
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="25dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
         </LinearLayout>
 
@@ -62,6 +63,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:text="Email"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -86,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Password"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:layout_margin="8dp"/>
 
             <EditText
                 android:id="@+id/editPassword"
@@ -105,18 +108,20 @@
             android:orientation="horizontal"></LinearLayout>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/loginbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_button"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:layout_margin="8dp"/>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/createaccountbtn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/creatAccount_button"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:layout_margin="8dp"/>
 
     </LinearLayout>
 
