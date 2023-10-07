@@ -1,21 +1,20 @@
 package com.example.gcc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.view.View;
-import android.widget.TextView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import javax.xml.transform.Result;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,5 +68,49 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
         //new stuff l8r
+    }
+
+    public void tryLogin(View view) {
+        boolean[] tryLoginUser = LoginUser();
+        if (tryLoginUser[0]==true) {
+            System.out.println("l8r");
+        } else {
+            System.out.println("epic fail");
+        }
+    }
+
+    private boolean[] LoginUser(){
+        final boolean[] isAllowed = {false, false};
+        EditText emailText =findViewById(R.id.editEmailAddress);
+        String email = ((emailText.getText().toString()));
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dbRef = db.child("users");
+        DatabaseReference dbRefEmail = dbRef.child(email);
+
+
+        dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot snapshot = task.getResult();
+
+                    if(snapshot.exists()) {
+                        Log.d("TAG", "The document exists.");
+                        EditText passText =findViewById(R.id.editPassword);
+                        String pass = ((passText.getText().toString()));
+                        if(snapshot.getValue().toString().equals(pass)){
+                            isAllowed[0] = true;
+                        }
+                    } else {
+                        Log.d("TAG", "The Document doesn't exist.");
+                        isAllowed[1] = false;
+                    }
+                } else {
+                    Log.d("TAG", task.getException().getMessage()); //Never ignore potential errors!
+                }
+            }
+        });
+        return isAllowed;
+
     }
 }
