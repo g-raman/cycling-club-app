@@ -32,8 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Boolean registerUser() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
 
-        email = findViewById(R.id.editEmailAddress);
-        password = findViewById(R.id.editPassword);
+        email = findViewById(R.id.usernameLogin);
+        password = findViewById(R.id.passwordLogin);
 
         String strEmail = email.getText().toString();
         String strPassword = password.getText().toString();

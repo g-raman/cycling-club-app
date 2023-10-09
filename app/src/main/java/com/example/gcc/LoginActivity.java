@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean[] LoginUser(){
         final boolean[] isAllowed = {false, false};
-        EditText username = findViewById(R.id.editEmailAddress);
+        EditText username = findViewById(R.id.usernameLogin);
         String strUsername = username.getText().toString();
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(snapshot.exists()) {
                         Log.d("TAG", "The document exists.");
-                        password = findViewById(R.id.editPassword);
+                        password = findViewById(R.id.passwordLogin);
                         String strPassword = password.getText().toString();
                         if(snapshot.getValue().toString().equals(strPassword)){
                             isAllowed[0] = true;
