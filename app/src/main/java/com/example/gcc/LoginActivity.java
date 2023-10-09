@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     interface callBack {
         void canLogin(boolean isAllowed);
     }
-    private final String EMAIL_REGEX = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\\\.[a-zA-Z0-9-.]+$";
 
     /*
     At least one letter.
@@ -31,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     At least one special character (in this case, @, #, $, %, ^, &, +, or =).
     Minimum length of 8 characters.
     */
-    private final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#$%^&+=!])([A-Za-z\\d@#$%^&+=!]){8,}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateField(String field, String regex) {
-        return field.equals(regex);
-    }
 
     public void tryLogin(View view) {
         LoginUser(new callBack() {
