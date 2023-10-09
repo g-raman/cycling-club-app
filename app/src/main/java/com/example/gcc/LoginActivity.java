@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void tryRegister(View view){
         Boolean tryToRegister = registerUser();
-        if (tryToRegister==true) {
-            System.out.println("l8r");
+        if (tryToRegister) {
+            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
         } else {
-            System.out.println("epic fail");
+            Toast.makeText(this, "Registration unsuccessful", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -68,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void tryLogin(View view) {
         boolean[] tryLoginUser = LoginUser();
-        if (tryLoginUser[0]==true) {
-            System.out.println("l8r");
+        if (tryLoginUser[0]) {
+            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
         } else {
-            System.out.println("epic fail");
+            Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
