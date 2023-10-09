@@ -3,8 +3,10 @@ package com.example.gcc;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 import android.widget.Toast;
@@ -36,39 +38,21 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
+
+        Button registerBtn = findViewById(R.id.registerBtn);
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+            }
+        });
     }
 
     private boolean validateField(String field, String regex) {
         return field.equals(regex);
     }
 
-    public void tryRegister(View view){
-        Boolean tryToRegister = registerUser();
-        if (tryToRegister) {
-            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Registration unsuccessful", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private Boolean registerUser() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-
-        EditText usernameField = findViewById(R.id.usernameLogin);
-        EditText passwordField = findViewById(R.id.passwordLogin);
-
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-
-
-        DatabaseReference newUserRole = db.getReference("users/"+username+"/role");
-        DatabaseReference newUserPassword = db.getReference("users/"+username+"/password");
-
-        newUserPassword.setValue(password);
-
-        return true;
-    }
     public void tryLogin(View view) {
         LoginUser(new callBack() {
             @Override
@@ -81,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void LoginUser(callBack canUserLogin){
         EditText usernameField =findViewById(R.id.usernameLogin);
@@ -120,10 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                     canUserLogin.canLogin(false);
                 }
             }
-
         });
-
     }
-
-
 }
