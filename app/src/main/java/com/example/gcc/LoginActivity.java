@@ -28,6 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     */
     private final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#$%^&+=!])([A-Za-z\\d@#$%^&+=!]){8,}$";
 
+    private EditText email;
+    private EditText password;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,34 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         return field.equals(regex);
     }
 
-    public void tryRegister(View view){
-        Boolean tryToRegister = registerUser();
-        if (tryToRegister==true) {
-            System.out.println("l8r");
-        } else {
-            System.out.println("epic fail");
-        }
 
-    }
-
-    private Boolean registerUser() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-
-        EditText emailText =findViewById(R.id.editEmailAddress);
-        EditText passText =findViewById(R.id.editPassword);
-
-        String email = ((emailText.getText().toString()));
-        String pass = ((passText.getText().toString()));
-
-
-        DatabaseReference newUserRole = db.getReference("users/"+email+"/role");
-        DatabaseReference newUserPassword = db.getReference("users/"+email+"/password");
-
-        newUserPassword.setValue(pass);
-
-        return true;
-        //new stuff l8r
-    }
 
     public void tryLogin(View view) {
         boolean[] tryLoginUser = LoginUser();
