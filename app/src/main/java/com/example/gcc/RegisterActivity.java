@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText email;
+    private EditText username;
     private EditText password;
 
     @Override
@@ -21,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void tryRegister(View view){
         Boolean tryToRegister = registerUser();
-        if (tryToRegister==true) {
+        if (tryToRegister) {
             System.out.println("l8r");
         } else {
             System.out.println("epic fail");
@@ -32,13 +32,13 @@ public class RegisterActivity extends AppCompatActivity {
     private Boolean registerUser() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
 
-        email = findViewById(R.id.usernameLogin);
+        username = findViewById(R.id.usernameLogin);
         password = findViewById(R.id.passwordLogin);
 
-        String strEmail = email.getText().toString();
+        String strUsername = username.getText().toString();
         String strPassword = password.getText().toString();
 
-        DatabaseReference newUserRole = db.getReference("users/"+strEmail+"/role");
+        DatabaseReference newUserRole = db.getReference("users/"+strUsername+"/role");
         DatabaseReference newUserPassword = db.getReference("users/"+strPassword+"/password");
 
         newUserPassword.setValue(strPassword);
