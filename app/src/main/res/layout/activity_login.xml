@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="tryLogin"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -92,7 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:onClick="tryLogin"
             android:text="@string/loginBtn"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 

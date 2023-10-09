@@ -28,24 +28,20 @@ public class LoginActivity extends AppCompatActivity {
     */
     private final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#$%^&+=!])([A-Za-z\\d@#$%^&+=!]){8,}$";
 
-    private EditText email;
+    private EditText username;
     private EditText password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-
-
     }
 
     private boolean validateField(String field, String regex) {
         return field.equals(regex);
     }
-
-
 
     public void tryLogin(View view) {
         boolean[] tryLoginUser = LoginUser();
@@ -58,12 +54,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean[] LoginUser(){
         final boolean[] isAllowed = {false, false};
-        EditText emailText =findViewById(R.id.editEmailAddress);
-        String email = ((emailText.getText().toString()));
+        EditText username = findViewById(R.id.editEmailAddress);
+        String strUsername = username.getText().toString();
+
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = db.child("users");
-        DatabaseReference dbRefEmail = dbRef.child(email);
-
+        DatabaseReference dbRefEmail = dbRef.child(strUsername);
 
         dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -73,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(snapshot.exists()) {
                         Log.d("TAG", "The document exists.");
-                        EditText passText =findViewById(R.id.editPassword);
-                        String pass = ((passText.getText().toString()));
-                        if(snapshot.getValue().toString().equals(pass)){
+                        password = findViewById(R.id.editPassword);
+                        String strPassword = password.getText().toString();
+                        if(snapshot.getValue().toString().equals(strPassword)){
                             isAllowed[0] = true;
                         }
                     } else {
@@ -88,6 +84,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         return isAllowed;
-
     }
 }

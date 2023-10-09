@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">GCC</string>
     <string name="appAcronym">GCC</string>
     <string name="appName">Grimpeurs Cycling Club</string>
     <string name="loginBtn">Login</string>
