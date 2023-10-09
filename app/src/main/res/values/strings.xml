@@ -8,6 +8,10 @@
     <string name="PasswordTag">Password:</string>
     <string name="roleUser">Participant</string>
     <string name="roleOwner">Club owner</string>
+    <string name="signUpQuestion">Don\'t have an account?</string>
+    <string name="signUpLink">Sign up</string>
+    <string name="signInQuestion">Already have an account?</string>
+    <string name="signInLink">Sign In</string>
 
     <string name="passwordRequirements">
         Must include: \n
