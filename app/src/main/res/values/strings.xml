@@ -10,10 +10,10 @@
     <string name="roleOwner">Club owner</string>
 
     <string name="passwordRequirements">
-        Must include: &#xA;
-        At least one letter. &#xA;
-        At least one digit. &#xA;
-        At least one special character ( @, #, $, %, ^, &amp;, +, or =). &#xA;
+        Must include: \n
+        At least one letter. \n
+        At least one digit. \n
+        At least one special character ( @, #, $, %, ^, &amp;, +, or =). \n
         Minimum length of 8 characters.
     </string>
 </resources>

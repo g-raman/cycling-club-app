@@ -48,7 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/usernameTag"
-                android:textSize="30sp" />
+                android:textSize="28sp" />
 
             <EditText
                 android:id="@+id/usernameRegister"
@@ -71,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/PasswordTag"
-                android:textSize="30sp" />
+                android:textSize="28sp" />
 
             <EditText
                 android:id="@+id/passwordRegister"
