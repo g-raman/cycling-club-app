@@ -88,6 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8sp"
+            android:onClick="tryRegister"
             android:text="@string/registerBtn"
             android:textSize="34sp" />
 
