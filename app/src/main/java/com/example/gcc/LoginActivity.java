@@ -3,10 +3,8 @@ package com.example.gcc;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 
@@ -19,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-
     private final String EMAIL_REGEX = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\\\.[a-zA-Z0-9-.]+$";
 
     /*
@@ -30,27 +27,43 @@ public class LoginActivity extends AppCompatActivity {
     */
     private final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#$%^&+=!])([A-Za-z\\d@#$%^&+=!]){8,}$";
 
-    private EditText username;
-    private EditText password;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-
-        Button registerBtn = findViewById(R.id.registerBtn);
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
     }
 
     private boolean validateField(String field, String regex) {
         return field.equals(regex);
+    }
+
+    public void tryRegister(View view){
+        Boolean tryToRegister = registerUser();
+        if (tryToRegister==true) {
+            System.out.println("l8r");
+        } else {
+            System.out.println("epic fail");
+        }
+
+    }
+
+    private Boolean registerUser() {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+        EditText usernameField = findViewById(R.id.usernameLogin);
+        EditText passwordField = findViewById(R.id.passwordLogin);
+
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+
+
+        DatabaseReference newUserRole = db.getReference("users/"+username+"/role");
+        DatabaseReference newUserPassword = db.getReference("users/"+username+"/password");
+
+        newUserPassword.setValue(password);
+
+        return true;
     }
 
     public void tryLogin(View view) {
@@ -64,12 +77,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean[] LoginUser(){
         final boolean[] isAllowed = {false, false};
-        EditText username = findViewById(R.id.usernameLogin);
-        String strUsername = username.getText().toString();
+        EditText usernameField =findViewById(R.id.usernameLogin);
+        String username = usernameField.getText().toString();
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = db.child("users");
-        DatabaseReference dbRefEmail = dbRef.child(strUsername);
+        DatabaseReference dbRefEmail = dbRef.child(username);
+
 
         dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -79,9 +93,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(snapshot.exists()) {
                         Log.d("TAG", "The document exists.");
-                        password = findViewById(R.id.passwordLogin);
-                        String strPassword = password.getText().toString();
-                        if(snapshot.getValue().toString().equals(strPassword)){
+                        EditText passwordField = findViewById(R.id.passwordLogin);
+                        String password = passwordField.getText().toString();
+
+                        if(snapshot.getValue().toString().equals(password)){
                             isAllowed[0] = true;
                         }
                     } else {
