@@ -1,7 +1,6 @@
 package com.example.gcc;
 
 public class User extends Account {
-    public String password;
     public String role;
     public Event[] joinedEvents;
 

@@ -2,7 +2,6 @@ package com.example.gcc;
 
 public class ClubOwner extends Account {
     public String clubName;
-    public String password;
     public Event[] hostedEvents;
 
     public ClubOwner(String clubName, String password) {
