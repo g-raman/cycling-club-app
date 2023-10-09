@@ -6,8 +6,8 @@
     <string name="registerBtn">Register</string>
     <string name="usernameTag">Username:</string>
     <string name="PasswordTag">Password:</string>
-    <string name="name">Name</string>
-    <string name="role">Role</string>
+    <string name="roleUser">Participant</string>
+    <string name="roleOwner">Club owner</string>
 
     <string name="passwordRequirements">
         Must include: &#xA;
