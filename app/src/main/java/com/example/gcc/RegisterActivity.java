@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
@@ -45,13 +47,19 @@ public class RegisterActivity extends AppCompatActivity {
         EditText usernameField = findViewById(R.id.usernameRegister);
         EditText passwordField = findViewById(R.id.passwordRegister);
 
+        RadioGroup radioGroup = findViewById(R.id.accountType);
+        int checkedBtnId = radioGroup.getCheckedRadioButtonId();
+        RadioButton checkedBtn = findViewById(checkedBtnId);
+        String checkedRole = checkedBtn.getText().toString();
+
+        String role = checkedRole.equals("Participant") ? "user" : "owner";
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference("users");
 
-        ref.child(username).setValue(new User(password, "participant"));
+        ref.child(username).setValue(new User(password, role));
 
         return true;
     }
