@@ -12,6 +12,8 @@
     <string name="signUpLink">Sign up</string>
     <string name="signInQuestion">Already have an account?</string>
     <string name="signInLink">Sign In</string>
+    <string name="name">name</string>
+    <string name="role">role</string>
 
     <string name="passwordRequirements">
         Must include: \n
