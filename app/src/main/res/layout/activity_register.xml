@@ -89,27 +89,27 @@
             android:layout_marginBottom="15dp"
             android:text="@string/passwordRequirements" />
 
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
+            android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/radio0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/roleUser" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/radio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/roleOwner" />
-        </LinearLayout>
+        </RadioGroup>
 
         <Button
             android:id="@+id/registerBtn2"
