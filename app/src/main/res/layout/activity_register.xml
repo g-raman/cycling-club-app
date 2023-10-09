@@ -21,9 +21,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="GCC"
-                android:textStyle="bold"
-                android:textSize="50sp" />
+                android:text="@string/appAcronym"
+                android:textSize="50sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -49,7 +49,7 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email:"
+                android:text="@string/usernameTag"
                 android:textSize="34sp" />
 
             <EditText
@@ -67,60 +67,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Username:"
-                android:textSize="34sp"
-                android:layout_marginTop="14sp"
-                android:layout_marginBottom="14sp"/>
-
-            <EditText
-                android:id="@+id/editTextText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="text"
-                android:minHeight="48dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/toggleaccounttype"
-                android:layout_width="324dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minHeight="48dp"
-                android:text="Account Type:"
-                android:textSize="34sp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/accounttype"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Participent"
-            android:textAlignment="viewStart" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
                 android:id="@+id/textView14"
-                android:layout_width="wrap_content"
+                android:layout_width="122dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Password:"
+                android:text="@string/PasswordTag"
                 android:textSize="34sp" />
 
             <EditText
@@ -136,7 +87,7 @@
             android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Must include: At least one letter. At least one digit. At least one special character ( @, #, $, %, ^, &, +, or =). Minimum length of 8 characters." />
+            android:text="@string/passwordRequirements" />
 
         <TextView
             android:id="@+id/textView17"
@@ -147,9 +98,9 @@
             android:id="@+id/createaccountbtn2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Account"
-            android:textSize="34sp"
-            android:layout_margin="8sp"/>
+            android:layout_margin="8sp"
+            android:text="@string/registerBtn"
+            android:textSize="34sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
