@@ -3,7 +3,7 @@ package com.example.gcc;
 import java.io.Serializable;
 
 public class User extends Account implements Serializable {
-    public String role;
+
 
     public Event[] joinedEvents;
 

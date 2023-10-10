@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -16,6 +19,10 @@ public class WelcomeActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_welcome);
         Intent i = getIntent();
         User newUser = (User)i.getSerializableExtra("USER");
-        Log.d("TAG", String.valueOf(newUser.getPassword()));
+        TextView userName = (TextView)findViewById(R.id.displayName);
+        TextView userRole = (TextView)findViewById(R.id.displayRole);
+
+        userName.setText(newUser.getPassword().toString());
+        userRole.setText(newUser.getRole().toString());
     }
 }

@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("TAG", "The document exists.");
 
                         if(snapshot.child("password").getValue().toString().equals(password)){
-                            canUserLogin.canLogin(true,snapshot.child("role").toString());
+                            canUserLogin.canLogin(true,snapshot.child("role").getValue().toString());
                         }
                         else {
                             canUserLogin.canLogin(false,"");
