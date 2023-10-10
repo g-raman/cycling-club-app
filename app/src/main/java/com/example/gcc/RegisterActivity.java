@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
                     public void canRegister(boolean isAllowed) {
                         if (isAllowed) {
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                            User newUser = null;
-                            ClubOwner newClubOwner = null;
+                            User newUser;
+                            ClubOwner newClubOwner;
                             Intent welcomeActivity = new Intent(RegisterActivity.this, WelcomeActivity.class);
                             if (role.equals("owner")) {
                                 newClubOwner = new ClubOwner(username, password, role);

@@ -1,6 +1,8 @@
 package com.example.gcc;
 
-public class ClubOwner extends Account {
+import java.io.Serializable;
+
+public class ClubOwner extends Account implements Serializable {
     public String clubName;
     public Event[] hostedEvents;
 
@@ -22,16 +24,4 @@ public class ClubOwner extends Account {
     }
 
 
-
-    public void createEvent() throws Exception {
-        throw new Exception("To be implemented");
-    }
-
-    public void deleteEvent() throws Exception {
-        throw new Exception("To be implemented");
-    }
-
-    public User[] getMembers() throws Exception {
-        throw new Exception("To be implemented");
-    }
 }
