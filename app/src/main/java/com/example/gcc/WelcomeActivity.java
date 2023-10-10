@@ -18,7 +18,18 @@ public class WelcomeActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         Intent i = getIntent();
-        User newUser = (User)i.getSerializableExtra("USER");
+        String newUserRole = (String)i.getSerializableExtra("ROLE");
+
+        Account newUser = null;
+
+        if (newUserRole.equals("owner")){
+            ClubOwner temp = (ClubOwner)i.getSerializableExtra("USER");
+            newUser = temp;
+        }
+        else if (newUserRole.equals("user")){
+            User temp = (User)i.getSerializableExtra("USER");
+            newUser = temp;
+        }
         TextView userName = (TextView)findViewById(R.id.displayName);
         TextView userRole = (TextView)findViewById(R.id.displayRole);
 

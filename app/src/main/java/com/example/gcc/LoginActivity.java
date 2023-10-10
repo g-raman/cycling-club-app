@@ -54,9 +54,17 @@ public class LoginActivity extends AppCompatActivity {
             public void canLogin(boolean isAllowed, String role) {
                 if (isAllowed){
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    User newUser = new User(password,role,username);
+                    User newUser = null;
+                    ClubOwner newClubOwner = null;
                     Intent welcomeActivity = new Intent(LoginActivity.this, WelcomeActivity.class);
-                    welcomeActivity.putExtra("USER",newUser);
+                    if (role.equals("owner")) {
+                        newClubOwner = new ClubOwner(username, password, role);
+                        welcomeActivity.putExtra("USER", newClubOwner);
+                    } else if (role.equals("user")) {
+                        newUser = new User(password, role, username);
+                        welcomeActivity.putExtra("USER", newUser);
+                    }
+                    welcomeActivity.putExtra("ROLE", role);
                     startActivity(welcomeActivity);
                     finish();
                 } else {
@@ -68,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void LoginUser(callBack canUserLogin, String username, String password, String role){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
         DatabaseReference dbRef = db.child("users");
         DatabaseReference dbRefEmail = dbRef.child(username);
 

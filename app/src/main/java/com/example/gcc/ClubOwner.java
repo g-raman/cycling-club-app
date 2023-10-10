@@ -16,6 +16,12 @@ public class ClubOwner extends Account {
         this.password = password;
         this.role = role;
     }
+    public ClubOwner(String password, String role) {
+        this.password = password;
+        this.role = role;
+    }
+
+
 
     public void createEvent() throws Exception {
         throw new Exception("To be implemented");

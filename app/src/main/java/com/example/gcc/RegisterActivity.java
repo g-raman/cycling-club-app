@@ -67,11 +67,20 @@ public class RegisterActivity extends AppCompatActivity {
                     public void canRegister(boolean isAllowed) {
                         if (isAllowed) {
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                            User newUser = new User(password, role, username);
+                            User newUser = null;
+                            ClubOwner newClubOwner = null;
                             Intent welcomeActivity = new Intent(RegisterActivity.this, WelcomeActivity.class);
-                            welcomeActivity.putExtra("USER", newUser);
+                            if (role.equals("owner")) {
+                                newClubOwner = new ClubOwner(username, password, role);
+                                welcomeActivity.putExtra("USER", newClubOwner);
+                            } else if (role.equals("user")) {
+                                newUser = new User(password, role, username);
+                                welcomeActivity.putExtra("USER", newUser);
+                            }
+                            welcomeActivity.putExtra("ROLE", role);
                             startActivity(welcomeActivity);
                             finish();
+
                         } else {
                             Toast.makeText(RegisterActivity.this, "Registration Failed, try a new username", Toast.LENGTH_SHORT).show();
                         }
@@ -84,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser(callBack canUserLogin, String username, String password, String role) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
+
         DatabaseReference ref = db.getReference("users");
 
         DatabaseReference dbRefEmail = ref.child(username);
@@ -101,7 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         Log.d("TAG", "The Document doesn't exist.");
                         canUserLogin.canRegister(true);
-                        ref.child(username).setValue(new User(password, role));
+                        if (role.equals("owner")){
+                            ref.child(username).setValue(new ClubOwner(password, role));
+                        } else if (role.equals("user")){
+                            ref.child(username).setValue(new User(password, role));
+                        }
                     }
                 } else {
                     Log.d("TAG", task.getException().getMessage()); //Never ignore potential errors!
