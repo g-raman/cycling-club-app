@@ -7,4 +7,5 @@ https://github.com/SEG2105BC-uOttawa/seg2105f23-project-project_grp_22
 - Sahil Shukla: 300301375
 - Krisha Veera: 300291136
 - Mekhi Perry: 300248033
+- Raman Gupta: 300290648
 
