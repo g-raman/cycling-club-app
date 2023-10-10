@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DataSnapshot snapshot = task.getResult();
 
-                    if(snapshot.exists()) {
+                    if(snapshot.exists() && (!(username.equals("")) || !(password.equals("")))) {
                         Log.d("TAG", "The document exists.");
 
                         if(snapshot.child("password").getValue().toString().equals(password)){
