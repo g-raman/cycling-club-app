@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (role.equals("owner")) {
                         newClubOwner = new ClubOwner(username, password, role);
                         welcomeActivity.putExtra("USER", newClubOwner);
-                    } else if (role.equals("user")) {
+                    } else if (role.equals("user") || role.equals("admin")) {
                         newUser = new User(password, role, username);
                         welcomeActivity.putExtra("USER", newUser);
                     }

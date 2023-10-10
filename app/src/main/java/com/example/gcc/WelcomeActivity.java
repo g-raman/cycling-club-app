@@ -30,6 +30,10 @@ public class WelcomeActivity extends AppCompatActivity implements Serializable {
             User temp = (User)i.getSerializableExtra("USER");
             newUser = temp;
         }
+        else if (newUserRole.equals("admin")){
+            User temp = (User)i.getSerializableExtra("USER");
+            newUser = temp;
+        }
         TextView userName = (TextView)findViewById(R.id.displayName);
         TextView userRole = (TextView)findViewById(R.id.displayRole);
 
