@@ -13,6 +13,8 @@ public class Account implements Serializable {
 
     public String getRole() { return this.role; }
 
+    public String getUsername() { return this.username; }
+
     public void setPassword(String password) {
        this.password = password;
     }

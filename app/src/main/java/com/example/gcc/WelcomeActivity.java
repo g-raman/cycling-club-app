@@ -22,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity implements Serializable {
         TextView userName = (TextView)findViewById(R.id.displayName);
         TextView userRole = (TextView)findViewById(R.id.displayRole);
 
-        userName.setText(newUser.getPassword().toString());
+        userName.setText(newUser.getUsername().toString());
         userRole.setText(newUser.getRole().toString());
     }
 }
