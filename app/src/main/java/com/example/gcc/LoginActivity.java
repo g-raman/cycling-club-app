@@ -24,13 +24,6 @@ public class LoginActivity extends AppCompatActivity {
         void canLogin(boolean isAllowed,String role);
     }
 
-    /*
-    At least one letter.
-    At least one digit.
-    At least one special character (in this case, @, #, $, %, ^, &, +, or =).
-    Minimum length of 8 characters.
-    */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,13 +67,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginUser(callBack canUserLogin, String username, String password, String role){
-
-
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = db.child("users");
         DatabaseReference dbRefEmail = dbRef.child(username);
-
-
 
         dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override

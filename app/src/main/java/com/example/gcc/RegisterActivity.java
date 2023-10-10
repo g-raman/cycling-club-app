@@ -3,8 +3,6 @@ package com.example.gcc;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,28 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.gcc.utils.Helper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class RegisterActivity extends AppCompatActivity {
     interface callBack {
         void canRegister(boolean isAllowed);
     }
-    /*
-    Username must:
-    Be 4 characters long
-    Only include characters, numbers, underscores, & periods
-     */
-    private final String USERNAME_REGEX = "^[A-Za-z0-9_.]{4,}$";
-    private final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +57,19 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordField.getText().toString();
                 String role = checkedRole.equals("Participant") ? "user" : "owner";
 
-                if (username.length() < 4) {
-                    Toast.makeText(RegisterActivity.this, "Username must be at least 4 characters long", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!username.matches(USERNAME_REGEX)) {
-                    Toast.makeText(RegisterActivity.this, "Username can only include letters, numbers, periods, & underscores", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!password.matches(PASSWORD_REGEX)) {
-                    Toast.makeText(RegisterActivity.this, "Make sure password meets all requirements", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                Helper helper = new Helper();
+                String msg = helper.validateFields(username, password);
+                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                if (!msg.equals("Registration Successful")) return;
+
                 registerUser(new callBack() {
                     @Override
                     public void canRegister(boolean isAllowed) {
                         if (isAllowed) {
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                            User newUser = new User(password,role,username);
+                            User newUser = new User(password, role, username);
                             Intent welcomeActivity = new Intent(RegisterActivity.this, WelcomeActivity.class);
-                            welcomeActivity.putExtra("USER",newUser);
+                            welcomeActivity.putExtra("USER", newUser);
                             startActivity(welcomeActivity);
                             finish();
                         } else {
@@ -112,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DataSnapshot snapshot = task.getResult();
 
-                    if(snapshot.exists()) {
+                    if (snapshot.exists()) {
                         canUserLogin.canRegister(false);
 
                     } else {
