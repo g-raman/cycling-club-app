@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
