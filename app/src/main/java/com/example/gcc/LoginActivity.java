@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     interface callBack {
-        void canLogin(boolean isAllowed);
+        void canLogin(boolean isAllowed,String role);
     }
 
     /*
@@ -49,21 +49,32 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void tryLogin(View view) {
+        EditText passwordField = findViewById(R.id.passwordLogin);
+        String password = passwordField.getText().toString();
+
+        EditText usernameField =findViewById(R.id.usernameLogin);
+        String username = usernameField.getText().toString();
+        String role = "";
+
         LoginUser(new callBack() {
             @Override
-            public void canLogin(boolean isAllowed) {
+            public void canLogin(boolean isAllowed, String role) {
                 if (isAllowed){
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    User newUser = new User(password,role,username);
+                    Intent welcomeActivity = new Intent(LoginActivity.this, WelcomeActivity.class);
+                    welcomeActivity.putExtra("USER",newUser);
+                    startActivity(welcomeActivity);
+                    finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }, username, password, role);
     }
 
-    private void LoginUser(callBack canUserLogin){
-        EditText usernameField =findViewById(R.id.usernameLogin);
-        String username = usernameField.getText().toString();
+    private void LoginUser(callBack canUserLogin, String username, String password, String role){
+
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbRef = db.child("users");
@@ -80,21 +91,20 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(snapshot.exists()) {
                         Log.d("TAG", "The document exists.");
-                        EditText passwordField = findViewById(R.id.passwordLogin);
-                        String password = passwordField.getText().toString();
+
                         if(snapshot.child("password").getValue().toString().equals(password)){
-                            canUserLogin.canLogin(true);
+                            canUserLogin.canLogin(true,snapshot.child("role").toString());
                         }
                         else {
-                            canUserLogin.canLogin(false);
+                            canUserLogin.canLogin(false,"");
                         }
                     } else {
                         Log.d("TAG", "The Document doesn't exist.");
-                        canUserLogin.canLogin(false);
+                        canUserLogin.canLogin(false,"");
                     }
                 } else {
                     Log.d("TAG", task.getException().getMessage()); //Never ignore potential errors!
-                    canUserLogin.canLogin(false);
+                    canUserLogin.canLogin(false,"");
                 }
             }
         });

@@ -29,6 +29,9 @@ import java.util.Map;
 
 
 public class RegisterActivity extends AppCompatActivity {
+    interface callBack {
+        void canRegister(boolean isAllowed);
+    }
     /*
     Username must:
     Be 4 characters long
@@ -76,23 +79,53 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Make sure password meets all requirements", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (registerUser(username, password, role)) {
-                    Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                }
+                registerUser(new callBack() {
+                    @Override
+                    public void canRegister(boolean isAllowed) {
+                        if (isAllowed) {
+                            Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                            User newUser = new User(password,role,username);
+                            Intent welcomeActivity = new Intent(RegisterActivity.this, WelcomeActivity.class);
+                            welcomeActivity.putExtra("USER",newUser);
+                            startActivity(welcomeActivity);
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Registration Failed, try a new username", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, username, password, role);
             }
         });
     }
 
-    public boolean registerUser(String username, String password, String role) {
+
+    private void registerUser(callBack canUserLogin, String username, String password, String role) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference("users");
 
-        ref.child(username).setValue(new User(password, role));
+        DatabaseReference dbRefEmail = ref.child(username);
 
-        return true;
+        dbRefEmail.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot snapshot = task.getResult();
+
+                    if(snapshot.exists()) {
+                        canUserLogin.canRegister(false);
+
+                    } else {
+                        Log.d("TAG", "The Document doesn't exist.");
+                        canUserLogin.canRegister(true);
+                        ref.child(username).setValue(new User(password, role));
+                    }
+                } else {
+                    Log.d("TAG", task.getException().getMessage()); //Never ignore potential errors!
+                    canUserLogin.canRegister(false);
+                }
+            }
+        });
     }
 
 }

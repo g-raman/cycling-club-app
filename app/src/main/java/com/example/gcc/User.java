@@ -1,9 +1,17 @@
 package com.example.gcc;
 
-public class User extends Account {
+import java.io.Serializable;
+
+public class User extends Account implements Serializable {
     public String role;
+
     public Event[] joinedEvents;
 
+    public User(String password, String role, String username) {
+        this.password = password;
+        this.role = role;
+        this.username = username;
+    }
     public User(String password, String role) {
         this.password = password;
         this.role = role;

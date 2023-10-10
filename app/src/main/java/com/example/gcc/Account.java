@@ -1,7 +1,10 @@
 package com.example.gcc;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
    public String password;
+    public String username;
 
     public String getPassword() {
         return this.password;
