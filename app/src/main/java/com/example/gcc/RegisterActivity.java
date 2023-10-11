@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String msg = helper.validateFields(username, password);
                 if (!msg.equals("Registration Successful")) {
                     Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
 
