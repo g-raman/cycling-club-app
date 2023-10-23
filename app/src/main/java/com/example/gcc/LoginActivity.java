@@ -56,17 +56,26 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     User newUser = null;
                     ClubOwner newClubOwner = null;
-                    Intent welcomeActivity = new Intent(LoginActivity.this, WelcomeActivity.class);
-                    if (role.equals("owner")) {
-                        newClubOwner = new ClubOwner(username, password, role);
-                        welcomeActivity.putExtra("USER", newClubOwner);
-                    } else if (role.equals("user") || role.equals("admin")) {
-                        newUser = new User(password, role, username);
-                        welcomeActivity.putExtra("USER", newUser);
+                    if (role.equals("admin")){
+                        User adminAccount = new User(password,role,username);
+                        Intent adminActivity = new Intent(LoginActivity.this, adminActivity.class);
+                        adminActivity.putExtra("USER",adminAccount);
+                        startActivity(adminActivity);
+                        finish();
+                    } else {
+                        Intent welcomeActivity = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        if (role.equals("owner")) {
+                            newClubOwner = new ClubOwner(username, password, role);
+                            welcomeActivity.putExtra("USER", newClubOwner);
+                        } else if (role.equals("user")) {
+                            newUser = new User(password, role, username);
+                            welcomeActivity.putExtra("USER", newUser);
+                        }
+                        welcomeActivity.putExtra("ROLE", role);
+                        startActivity(welcomeActivity);
+                        finish();
                     }
-                    welcomeActivity.putExtra("ROLE", role);
-                    startActivity(welcomeActivity);
-                    finish();
+
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
