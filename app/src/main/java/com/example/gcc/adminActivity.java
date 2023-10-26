@@ -1,6 +1,7 @@
 package com.example.gcc;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
@@ -8,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,9 +51,31 @@ public class adminActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
+        listViewEventTypes = findViewById(R.id.listEventTypesView);
+        List<eventType> eventTypes = new ArrayList<>();
+        dbEventTypes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //eventTypes.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    eventType newEventType = postSnapshot.getValue(eventType.class);
+                    eventTypes.add(newEventType);
+
+                }
+                EventTypeList eventTypeAdaptor = new EventTypeList(adminActivity.this, eventTypes);
+                listViewEventTypes.setAdapter(eventTypeAdaptor);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
         dbUsers = FirebaseDatabase.getInstance().getReference("users");
 
-        listViewAccounts = (ListView) findViewById(R.id.listUsersView);
+        listViewAccounts = findViewById(R.id.listUsersView);
         List<Account> Accounts = new ArrayList<>();
         Button addUserBtn = findViewById(R.id.addUserBtn);
 
@@ -64,6 +90,7 @@ public class adminActivity extends AppCompatActivity implements Serializable {
 
                 }
                 AccountList accountAdaptor = new AccountList(adminActivity.this, Accounts);
+
                 listViewAccounts.setAdapter(accountAdaptor);
             }
 
@@ -72,28 +99,7 @@ public class adminActivity extends AppCompatActivity implements Serializable {
 
             }
         });
-        dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
-        listViewEventTypes = (ListView) findViewById(R.id.listEventTypesView);
-        List<eventType> eventTypes = new ArrayList<>();
-        dbEventTypes.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                eventTypes.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    eventType newEventType = postSnapshot.getValue(eventType.class);
 
-                    eventTypes.add(newEventType);
-
-                }
-                EventTypeList eventTypeAdaptor = new EventTypeList(adminActivity.this, eventTypes);
-                listViewEventTypes.setAdapter(eventTypeAdaptor);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
         addUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +139,14 @@ public class adminActivity extends AppCompatActivity implements Serializable {
                     }
                 }, username, password, role);
 
+            }
+        });
+        listViewAccounts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Account account = Accounts.get(i);
+                showUpdateDeleteDialog(account.getUsername(), account.getPassword(),account.getRole());
+                return true;
             }
         });
 
@@ -249,7 +263,72 @@ public class adminActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private void showUpdateDeleteDialog(final String productId, String productName) {
+    private void showUpdateDeleteDialog(final String userName,String userpwd,String userRole) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.account_update_dialog, null);
+        dialogBuilder.setView(dialogView);
 
+        String[] Roles = new String[]{"user","owner"};
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Roles);
+        Spinner role = dialogView.findViewById(R.id.spinnerUpdateRole);
+        role.setAdapter(roleAdapter);
+
+        final EditText editTextUsername = (EditText) dialogView.findViewById(R.id.editTextUserName);
+        final EditText editTextUserpwd  = (EditText) dialogView.findViewById(R.id.editTextUserPwd);
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateUser);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteUser);
+
+        editTextUsername.setText(userName);
+        editTextUserpwd.setText(userpwd);
+        if (userRole.equals("user")){
+            role.setSelection(0);
+        } else {
+            role.setSelection(1);
+        }
+
+        dialogBuilder.setTitle(userName);
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextUsername.getText().toString().trim();
+                String pwd = (editTextUserpwd.getText().toString());
+                String roleStr = role.getSelectedItem().toString();
+                if (!(TextUtils.isEmpty(name) && TextUtils.isEmpty(pwd))) {
+                    updateUsername(name, pwd, roleStr);
+                    b.dismiss();
+                }
+            }
+        });
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextUsername.getText().toString().trim();
+                deleteUser(name);
+                b.dismiss();
+            }
+        });
+
+
+    }
+    private void updateUsername(String userName,String userPwd,String userRole){
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(userName);
+        Account acc;
+        if (userRole.equals("user")){
+            acc = new User(userName,userPwd,userRole);
+        }
+        else {
+            acc = new ClubOwner(userName,userPwd,userRole);
+        }
+        dR.setValue(acc);
+        Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
+    }
+    private void deleteUser(String name){
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(name);
+        dR.removeValue();
+        Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
     }
 }
