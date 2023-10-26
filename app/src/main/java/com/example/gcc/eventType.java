@@ -1,34 +1,66 @@
 package com.example.gcc;
 
 public class eventType {
-    private String Name;
+    private String name;
 
-    private String Description;
+    private String description;
 
-    private Integer Level;
-    private Float PaceMin;
-    private Float PaceMax;
+    private Integer level;
+    private Float paceMin;
+    private Float paceMax;
     private Integer age;
 
+    public eventType(){}
+
     public eventType(String Name, String Description, Integer Level, Float PaceMin, Float PaceMax, Integer age){
-        this.Name=Name;
-        this.Description=Description;
-        this.Level=Level;
-        this.PaceMin=PaceMin;
-        this.PaceMax=PaceMax;
-        this.age=age;
+        this.name =Name;
+        this.description =Description;
+        this.level =Level;
+        this.paceMin =PaceMin;
+        this.paceMax =PaceMax;
+        this.age =age;
     }
 
+
+
     public String getName() {
-        return Name;
+        return name;
     }
     public String getDescription(){
-        return Description;
+        return description;
     }
 
     public Integer getLevel(){
-        return Level;
+        return level;
     }
 
+    public Float getPaceMin(){ return paceMin; }
 
+    public Float getPaceMax() { return paceMax; }
+
+    public Integer getAge() { return age; }
+
+    public void name(String name) {
+        this.name = name;
+    }
+
+    public void description(String description) {
+        this.description = description;
+    }
+
+    public void level(Integer level) {
+        this.level = level;
+    }
+
+    public void paceMin(Float paceMin) {
+        this.paceMin = paceMin;
+    }
+
+    public void paceMax(Float paceMax) {
+        this.paceMax = paceMax;
+    }
+
+    public void age(Integer age) {
+        this.age = age;
+    }
 }

@@ -26,4 +26,5 @@
     <string name="newUserDesc">"Enter a \nUsername,\nPassword "</string>
     <string name="adminUsers">Users:</string>
     <string name="stringAdd">Add</string>
+    <string name="addEventType">Add EventType</string>
 </resources>
