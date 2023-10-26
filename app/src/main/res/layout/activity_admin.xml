@@ -1,6 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/addUserBtn"
+        android:layout_width="259dp"
+        android:layout_height="58dp"
+        android:layout_margin="8sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="111dp"
+        android:backgroundTint="#2196F3"
+        android:onClick="tryRegister"
+        android:text="@string/stringAdd"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountType" />
+
+    <TextView
+        android:id="@+id/textViewUsers"
+        android:layout_width="413dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/adminUsers"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAdminHeader"
+        android:layout_width="409dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/adminText"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewUserDesc"
+        android:layout_width="164dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="247dp"
+        android:text="@string/newUserDesc"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/accountType"
+        android:layout_width="411dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="178dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="129dp"
+            android:layout_height="63dp"
+            android:baselineAligned="false"
+            android:buttonTint="#2196F3"
+            android:checked="true"
+            android:text="@string/roleUser" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="61dp"
+            android:buttonTint="#2196F3"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/roleOwner" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="245dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="245dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listUsersView"
+        android:layout_width="412dp"
+        android:layout_height="258dp"
+        android:layout_marginTop="304dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

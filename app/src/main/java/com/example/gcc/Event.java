@@ -2,6 +2,7 @@ package com.example.gcc;
 
 public class Event {
     private ClubOwner host;
+    private eventType type;
     private User[] participants;
     private String startTime;
     private String endTime;

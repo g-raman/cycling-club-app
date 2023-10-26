@@ -22,4 +22,8 @@
         At least one special character ( @, #, $, %, ^, &amp;, +, or =). \n
         Minimum length of 8 characters.
     </string>
+    <string name="adminText">Admin View</string>
+    <string name="newUserDesc">"Enter a \nUsername,\nPassword "</string>
+    <string name="adminUsers">Users:</string>
+    <string name="stringAdd">Add</string>
 </resources>

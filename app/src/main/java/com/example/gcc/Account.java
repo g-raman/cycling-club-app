@@ -7,6 +7,7 @@ public class Account implements Serializable {
     public String role;
     public String username;
 
+
     public String getPassword() {
         return this.password;
     }
