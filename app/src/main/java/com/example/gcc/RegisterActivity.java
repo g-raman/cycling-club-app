@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        Button registerBtn = findViewById(R.id.registerBtn2);
+        Button registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
