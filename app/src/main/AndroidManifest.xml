@@ -16,8 +16,11 @@
         android:theme="@style/Theme.GCC"
         tools:targetApi="31">
         <activity
+            android:name=".admin_viewing_users"
+            android:exported="false" />
+        <activity
             android:name=".WelcomeActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -27,7 +30,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

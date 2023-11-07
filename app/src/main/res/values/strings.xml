@@ -31,4 +31,8 @@
     <string name="adminUsers">Users:</string>
     <string name="stringAdd">Add</string>
     <string name="addEventType">Add EventType</string>
+    <string name="toEvents_btn">To Events</string>
+    <string name="logout_btn">Logout</string>
+    <string name="adduser_btn">Add</string>
+    <string name="deleteuserbtn">Delete</string>
 </resources>
