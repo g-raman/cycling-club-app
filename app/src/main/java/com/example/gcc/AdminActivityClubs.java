@@ -67,8 +67,9 @@ public class AdminActivityClubs extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 eventTypes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    eventType newEventType = postSnapshot.getValue(eventType.class);
+                    eventType newEventType = new eventType(postSnapshot.child("name").getValue().toString(),postSnapshot.child("description").getValue().toString(),Integer.valueOf(String.valueOf(postSnapshot.child("level").getValue())),Float.parseFloat(postSnapshot.child("paceMin").getValue().toString()) ,Float.parseFloat(postSnapshot.child("paceMax").getValue().toString()),Integer.valueOf(postSnapshot.child("age").getValue().toString()));
                     eventTypes.add(newEventType);
+                    Log.d("TAG",eventTypes.toString());
 
                 }
                 EventTypeList eventTypeAdaptor = new EventTypeList(AdminActivityClubs.this, eventTypes);
