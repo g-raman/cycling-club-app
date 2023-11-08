@@ -36,14 +36,12 @@ public class EventTypeList extends ArrayAdapter<eventType> {
 
         eventType newEventType = eventTypes.get(position);
         textViewEventName.setText("test");
-        /*
         textViewEventName.setText(newEventType.getName());
         textViewEventDesc.setText(newEventType.getDescription());
 
         textViewEventMinMax.setText(String.format("Pace: %s - %s", newEventType.getPaceMin().toString(), newEventType.getPaceMax().toString()));
         textViewEventLevel.setText(new StringBuilder().append("Level: ").append(newEventType.getLevel()).toString());
         textViewEventAge.setText(new StringBuilder().append("Age: ").append(newEventType.getAge()).toString());
-        */
 
         return listViewItem;
     }

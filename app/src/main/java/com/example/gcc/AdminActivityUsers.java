@@ -237,10 +237,10 @@ public class AdminActivityUsers extends AppCompatActivity {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(userName);
         Account acc;
         if (userRole.equals("user")){
-            acc = new User(userName,userPwd,userRole);
+            acc = new User(userPwd,userRole);
         }
         else {
-            acc = new ClubOwner(userName,userPwd,userRole);
+            acc = new ClubOwner(userName,userPwd);
         }
         dR.setValue(acc);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,11 +18,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminActivityClubs extends AppCompatActivity {
     DatabaseReference dbEventTypes;
+
+    ListView listViewEventTypes;
 
     interface eventTypeCB {
         void canAddEventType(boolean isAllowed);
@@ -49,6 +57,28 @@ public class AdminActivityClubs extends AppCompatActivity {
                 return true;
             }
             return false;
+        });
+
+        dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
+        listViewEventTypes = findViewById(R.id.listEventTypesView);
+        List<eventType> eventTypes = new ArrayList<>();
+        dbEventTypes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                eventTypes.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    eventType newEventType = postSnapshot.getValue(eventType.class);
+                    eventTypes.add(newEventType);
+
+                }
+                EventTypeList eventTypeAdaptor = new EventTypeList(AdminActivityClubs.this, eventTypes);
+                listViewEventTypes.setAdapter(eventTypeAdaptor);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
 
         Spinner level = findViewById(R.id.spinnerLevel);
