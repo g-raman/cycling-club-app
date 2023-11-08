@@ -16,9 +16,6 @@
         android:theme="@style/Theme.GCC"
         tools:targetApi="31">
         <activity
-            android:name=".admin_viewing_users"
-            android:exported="false" />
-        <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
@@ -27,6 +24,16 @@
         <activity
             android:name=".adminActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminActivityUsers"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivityClubs"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivitySettings"
+            android:exported="false" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">
