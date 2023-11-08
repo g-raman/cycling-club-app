@@ -58,8 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                     ClubOwner newClubOwner = null;
                     if (role.equals("admin")){
                         User adminAccount = new User(password,role,username);
-                        Intent adminActivity = new Intent(LoginActivity.this, adminActivity.class);
-                        adminActivity.putExtra("USER",adminAccount);
+                        Intent adminActivity = new Intent(LoginActivity.this, AdminActivityUsers.class);
+
                         startActivity(adminActivity);
                         finish();
                     } else {
