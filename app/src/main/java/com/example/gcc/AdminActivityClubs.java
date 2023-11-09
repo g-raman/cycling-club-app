@@ -1,12 +1,16 @@
 package com.example.gcc;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,7 +71,7 @@ public class AdminActivityClubs extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 eventTypes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    eventType newEventType = new eventType(postSnapshot.child("name").getValue().toString(),postSnapshot.child("description").getValue().toString(),Integer.valueOf(String.valueOf(postSnapshot.child("level").getValue())),Float.parseFloat(postSnapshot.child("paceMin").getValue().toString()) ,Float.parseFloat(postSnapshot.child("paceMax").getValue().toString()),Integer.valueOf(postSnapshot.child("age").getValue().toString()));
+                    eventType newEventType = new eventType(postSnapshot.getKey().toString(),postSnapshot.child("description").getValue().toString(),Integer.valueOf(String.valueOf(postSnapshot.child("level").getValue())),Float.parseFloat(postSnapshot.child("paceMin").getValue().toString()) ,Float.parseFloat(postSnapshot.child("paceMax").getValue().toString()),Integer.valueOf(postSnapshot.child("age").getValue().toString()), Boolean.valueOf(postSnapshot.child("status").getValue().toString()));
                     eventTypes.add(newEventType);
                     Log.d("TAG",eventTypes.toString());
 
@@ -122,6 +126,14 @@ public class AdminActivityClubs extends AppCompatActivity {
                 }, eventTypeName, eventTypeDesc, eventTypeMinPace, eventTypeMaxPace, levelInt, ageInt);
             }
         });
+        listViewEventTypes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                eventType newEventType = eventTypes.get(i);
+                showUpdateDeleteDialog(newEventType.getName(),newEventType.getDescription(),newEventType.getPaceMin(),newEventType.getPaceMax(),newEventType.getAge(),newEventType.getLevel(),newEventType.getStatus());
+                return true;
+            }
+        });
     }
 
     private void canAddEventType(eventTypeCB canAddType, String Name, String Desc, Float minPace, Float maxPace, Integer level, Integer age) {
@@ -143,7 +155,7 @@ public class AdminActivityClubs extends AppCompatActivity {
                     } else {
                         Log.d("TAG", "The Document doesn't exist.");
                         canAddType.canAddEventType(true);
-                        eventType newEventType = new eventType(Name, Desc, level, minPace, maxPace, age);
+                        eventType newEventType = new eventType(Name, Desc, level, minPace, maxPace, age, true);
                         ref.child(Name).setValue(newEventType);
                     }
                 } else {
@@ -153,4 +165,105 @@ public class AdminActivityClubs extends AppCompatActivity {
             }
         });
     }
+
+    private void showUpdateDeleteDialog(final String eventName,String eventDesc,float minPace,float maxPace,int Age,int Level, Boolean status) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.eventtype_update_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        String[] Roles = new String[]{"Available","Hidden"};
+        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Roles);
+        Spinner eventStatus = dialogView.findViewById(R.id.spinnerAdminChangeStatus);
+        eventStatus.setAdapter(roleAdapter);
+
+        Integer[] Items = new Integer[]{1, 2, 3, 4, 5};
+        ArrayAdapter<Integer> levelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Items);
+        Spinner level = dialogView.findViewById(R.id.spinnerAdminChangeEventLevel);
+        level.setAdapter(levelAdapter);
+
+        final Button buttonUpdateAdminEventTypeBtn = (Button) dialogView.findViewById(R.id.buttonUpdateAdminEventType);
+        final EditText eventNameText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeEventName);
+        final EditText eventDescText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeDesc);
+        final EditText eventMinPaceText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeMinPace);
+        final EditText eventMaxPaceText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeMaxPace);
+        final EditText eventAgeText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeAge);
+        final Button buttonDeleteAdminEventTypeBtn = (Button) dialogView.findViewById(R.id.buttonDeleteAdminEventType);
+
+        String oldName = eventName;
+        if (status.equals(true)){
+            eventStatus.setSelection(0);
+        } else {
+            eventStatus.setSelection(1);
+        }
+
+        dialogBuilder.setTitle(eventName);
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        buttonUpdateAdminEventTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String neweventName = "";
+                String neweventDesc = "";
+                float newminPace = 0;
+                float newmaxPace = 0;
+                Integer newAge = null;
+                Integer newLevel = null;
+                Boolean newStatus = null;
+                try {
+                    neweventName = eventNameText.getText().toString().trim();
+                    neweventDesc = eventDescText.getText().toString();
+                    if (Float.parseFloat(eventMinPaceText.getText().toString())<(Float.parseFloat(eventMaxPaceText.getText().toString()))) {
+                        newminPace = Float.parseFloat(eventMinPaceText.getText().toString());
+                        newmaxPace = Float.parseFloat(eventMaxPaceText.getText().toString());
+                    }else {
+                        newmaxPace = Float.parseFloat(eventMinPaceText.getText().toString());
+                        newminPace = Float.parseFloat(eventMaxPaceText.getText().toString());
+                    }
+                    newAge = Integer.parseInt(eventAgeText.getText().toString());
+                    newLevel = level.getSelectedItemPosition()+1;
+                    if (eventStatus.getSelectedItemPosition()==0){
+                        newStatus = true;
+                    }
+                    else {
+                        newStatus = false;
+                    }
+
+                }
+                catch (Exception e) {
+                    Log.d("TAG", "BAD");
+                }
+                if (!(TextUtils.isEmpty(neweventName) && TextUtils.isEmpty(neweventDesc))) {
+                    updateEventType(neweventName,neweventDesc, newminPace, newmaxPace,newAge,newLevel,newStatus, oldName);
+                    b.dismiss();
+                }
+            }
+        });
+        buttonDeleteAdminEventTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = eventNameText.getText().toString().trim();
+                deleteEventType(name);
+                b.dismiss();
+            }
+        });
+
+
+    }
+    private void updateEventType(final String eventName,String eventDesc,float minPace,float maxPace,int Age,int Level, Boolean status, String oldName){
+        deleteEventType(oldName);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("eventTypes").child(eventName);
+
+        eventType newType = new eventType(eventDesc,Level,minPace,maxPace,Age,status);
+        dR.setValue(newType);
+        Toast.makeText(getApplicationContext(), "eventType Updated", Toast.LENGTH_LONG).show();
+    }
+
+    private void deleteEventType(final String eventName){
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("eventTypes").child(eventName);
+        dR.removeValue();
+    }
+
+
 }

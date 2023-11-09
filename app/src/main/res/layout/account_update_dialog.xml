@@ -5,17 +5,17 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editTextUserName"
+        android:id="@+id/editTextAdminChangeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter name" />
 
     <EditText
-        android:id="@+id/editTextUserPwd"
+        android:id="@+id/editTextAdminChangeDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextUserName"
-        android:hint="Enter price" />
+        android:layout_below="@id/editTextAdminChangeName"
+        android:hint="Enter pwd" />
 
     <Spinner
         android:id="@+id/spinnerUpdateRole"
@@ -28,14 +28,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonUpdateUser"
+            android:id="@+id/buttonUpdateAdminEventType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Update" />
 
         <Button
-            android:id="@+id/buttonDeleteUser"
+            android:id="@+id/buttonDeleteAdminEventType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

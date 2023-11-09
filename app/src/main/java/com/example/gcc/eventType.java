@@ -9,16 +9,27 @@ public class eventType {
     private Float paceMin;
     private Float paceMax;
     private Integer age;
+    private boolean status;
 
     public eventType(){}
 
-    public eventType(String Name, String Description, Integer Level, Float PaceMin, Float PaceMax, Integer age){
+    public eventType(String Name, String Description, Integer Level, Float PaceMin, Float PaceMax, Integer age,boolean status){
         this.name =Name;
         this.description =Description;
         this.level =Level;
         this.paceMin =PaceMin;
         this.paceMax =PaceMax;
         this.age =age;
+        this.status=status;
+    }
+    public eventType(String Description, Integer Level, Float PaceMin, Float PaceMax, Integer age,boolean status){
+        this.description =Description;
+        this.level =Level;
+        this.paceMin =PaceMin;
+        this.paceMax =PaceMax;
+        this.age =age;
+        this.status=status;
+
     }
 
 
@@ -39,6 +50,8 @@ public class eventType {
     public Float getPaceMax() { return paceMax; }
 
     public Integer getAge() { return age; }
+
+    public Boolean getStatus() { return status; }
 
     public void name(String name) {
         this.name = name;

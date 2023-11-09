@@ -193,12 +193,14 @@ public class AdminActivityUsers extends AppCompatActivity {
         Spinner role = dialogView.findViewById(R.id.spinnerUpdateRole);
         role.setAdapter(roleAdapter);
 
-        final EditText editTextUsername = (EditText) dialogView.findViewById(R.id.editTextUserName);
-        final EditText editTextUserpwd  = (EditText) dialogView.findViewById(R.id.editTextUserPwd);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateUser);
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteUser);
+        final EditText editTextUsername = (EditText) dialogView.findViewById(R.id.editTextAdminChangeName);
+        final EditText editTextUserpwd  = (EditText) dialogView.findViewById(R.id.editTextAdminChangeDesc);
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateAdminEventType);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteAdminEventType);
 
         editTextUsername.setText(userName);
+
+        String oldName = userName;
         editTextUserpwd.setText(userpwd);
         if (userRole.equals("user")){
             role.setSelection(0);
@@ -217,7 +219,7 @@ public class AdminActivityUsers extends AppCompatActivity {
                 String pwd = (editTextUserpwd.getText().toString());
                 String roleStr = role.getSelectedItem().toString();
                 if (!(TextUtils.isEmpty(name) && TextUtils.isEmpty(pwd))) {
-                    updateUsername(name, pwd, roleStr);
+                    updateUsername(oldName,name, pwd, roleStr);
                     b.dismiss();
                 }
             }
@@ -233,14 +235,15 @@ public class AdminActivityUsers extends AppCompatActivity {
 
 
     }
-    private void updateUsername(String userName,String userPwd,String userRole){
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(userName);
+    private void updateUsername(String oldName, String userName,String userPwd,String userRole){
+        deleteUser(oldName);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users").child(userName);
         Account acc;
         if (userRole.equals("user")){
             acc = new User(userPwd,userRole);
         }
         else {
-            acc = new ClubOwner(userName,userPwd);
+            acc = new ClubOwner(userPwd,userRole);
         }
         dR.setValue(acc);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
@@ -248,6 +251,6 @@ public class AdminActivityUsers extends AppCompatActivity {
     private void deleteUser(String name){
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(name);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
     }
 }
