@@ -83,7 +83,7 @@
 
     <LinearLayout
         android:id="@+id/setPace"
-        android:layout_width="0dp"
+        android:layout_width="179dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
@@ -112,7 +112,7 @@
 
         <TextView
             android:id="@+id/Range"
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
             android:text="@string/dashRange"
@@ -120,7 +120,7 @@
 
         <EditText
             android:id="@+id/editTextPaceMax"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:hint="@string/max"
             android:importantForAutofill="no"
