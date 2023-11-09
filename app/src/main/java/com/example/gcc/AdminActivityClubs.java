@@ -243,7 +243,7 @@ public class AdminActivityClubs extends AppCompatActivity {
         buttonDeleteAdminEventTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = eventNameText.getText().toString().trim();
+                String name = oldName;
                 deleteEventType(name);
                 b.dismiss();
             }
@@ -251,7 +251,7 @@ public class AdminActivityClubs extends AppCompatActivity {
 
 
     }
-    private void updateEventType(final String eventName,String eventDesc,float minPace,float maxPace,int Age,int Level, Boolean status, String oldName){
+    private void updateEventType(String eventName,String eventDesc,float minPace,float maxPace,int Age,int Level, Boolean status, String oldName){
         deleteEventType(oldName);
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("eventTypes").child(eventName);
 
@@ -260,7 +260,8 @@ public class AdminActivityClubs extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "eventType Updated", Toast.LENGTH_LONG).show();
     }
 
-    private void deleteEventType(final String eventName){
+    private void deleteEventType(String eventName){
+        Log.d("TAG",eventName);
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("eventTypes").child(eventName);
         dR.removeValue();
     }
