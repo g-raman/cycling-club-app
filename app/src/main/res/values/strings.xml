@@ -31,4 +31,13 @@
     <string name="adminUsers">Users:</string>
     <string name="stringAdd">Add</string>
     <string name="addEventType">Add EventType</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_types">Event Types</string>
+    <string name="add_event">Add Event</string>
+    <string name="age">Age:</string>
+    <string name="level">Level:</string>
+    <string name="pace">Pace:</string>
+    <string name="dashRange">-</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
 </resources>
