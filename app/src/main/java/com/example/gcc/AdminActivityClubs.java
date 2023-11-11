@@ -190,6 +190,13 @@ public class AdminActivityClubs extends AppCompatActivity {
         final EditText eventAgeText = (EditText) dialogView.findViewById(R.id.editTextAdminChangeAge);
         final Button buttonDeleteAdminEventTypeBtn = (Button) dialogView.findViewById(R.id.buttonDeleteAdminEventType);
 
+        eventNameText.setText(eventName);
+        eventDescText.setText(eventDesc);
+        eventMinPaceText.setText(String.valueOf(minPace));
+        eventMaxPaceText.setText(String.valueOf(maxPace));
+        eventAgeText.setText(String.valueOf(Age));
+        level.setSelection((Level-1));
+
         String oldName = eventName;
         if (status.equals(true)){
             eventStatus.setSelection(0);
@@ -234,7 +241,7 @@ public class AdminActivityClubs extends AppCompatActivity {
                 catch (Exception e) {
                     Log.d("TAG", "BAD");
                 }
-                if (!(TextUtils.isEmpty(neweventName) && TextUtils.isEmpty(neweventDesc))) {
+                if (!(TextUtils.isEmpty(neweventName) && TextUtils.isEmpty(neweventDesc) && Float.isNaN(newminPace) && Float.isNaN(newmaxPace) && newAge==null && newLevel==null)) {
                     updateEventType(neweventName,neweventDesc, newminPace, newmaxPace,newAge,newLevel,newStatus, oldName);
                     b.dismiss();
                 }
