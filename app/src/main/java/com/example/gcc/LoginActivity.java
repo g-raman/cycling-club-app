@@ -62,20 +62,20 @@ public class LoginActivity extends AppCompatActivity {
 
                         startActivity(adminActivity);
                         finish();
-                    } else {
-                        Intent welcomeActivity = new Intent(LoginActivity.this, WelcomeActivity.class);
-                        if (role.equals("owner")) {
-                            newClubOwner = new ClubOwner(username, password, role);
-                            welcomeActivity.putExtra("USER", newClubOwner);
-                        } else if (role.equals("user")) {
-                            newUser = new User(password, role, username);
-                            welcomeActivity.putExtra("USER", newUser);
-                        }
-                        welcomeActivity.putExtra("ROLE", role);
-                        startActivity(welcomeActivity);
+                    } else if (role.equals("owner")) {
+                        Intent clubOwnerMenu = new Intent(LoginActivity.this, clubOwnerMainMenu.class);
+                        newClubOwner = new ClubOwner(username, password, role);
+                        clubOwnerMenu.putExtra("USER", newClubOwner);
+                        startActivity(clubOwnerMenu);
+                        finish();
+                    } else if (role.equals("user")) {
+                        Intent userMenu = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        newUser = new User(password, role, username);
+                        userMenu.putExtra("USER", newUser);
+                        userMenu.putExtra("ROLE", role);
+                        startActivity(userMenu);
                         finish();
                     }
-
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }

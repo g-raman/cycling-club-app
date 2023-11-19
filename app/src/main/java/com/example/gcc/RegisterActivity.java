@@ -76,8 +76,11 @@ public class RegisterActivity extends AppCompatActivity {
                             ClubOwner newClubOwner;
                             Intent welcomeActivity = new Intent(RegisterActivity.this, WelcomeActivity.class);
                             if (role.equals("owner")) {
+                                Intent clubOwnerMenu = new Intent(RegisterActivity.this, clubOwnerMainMenu.class);
                                 newClubOwner = new ClubOwner(username, password, role);
-                                welcomeActivity.putExtra("USER", newClubOwner);
+                                clubOwnerMenu.putExtra("USER", newClubOwner);
+                                startActivity(clubOwnerMenu);
+                                finish();
                             } else if (role.equals("user")) {
                                 newUser = new User(password, role, username);
                                 welcomeActivity.putExtra("USER", newUser);

@@ -31,7 +31,9 @@
         <activity
             android:name=".AdminActivitySettings"
             android:exported="false" />
-
+        <activity
+            android:name=".clubOwnerMainMenu"
+            android:exported="false"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true">
