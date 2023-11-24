@@ -97,7 +97,7 @@ public class AdminActivityUsers extends AppCompatActivity {
         addUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText usernameField = findViewById(R.id.editTextPassword);
+                EditText usernameField = findViewById(R.id.editTextUsername);
                 EditText passwordField = findViewById(R.id.editTextPassword);
 
                 RadioGroup radioGroup = findViewById(R.id.accountType);
