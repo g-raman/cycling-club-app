@@ -8,12 +8,13 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ClubOwnerActivityEvents extends AppCompatActivity {
-
+    ClubOwner newClubOwner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_owner_events);
-
+        Intent i = getIntent();
+        newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
 
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_events);

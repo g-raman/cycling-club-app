@@ -13,8 +13,7 @@ public class clubOwnerMainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clubowner_mainmenu);
 
-        Intent i = getIntent();
-        newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
+
     }
 
 
