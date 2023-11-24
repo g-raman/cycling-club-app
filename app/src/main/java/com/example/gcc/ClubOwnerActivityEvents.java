@@ -22,7 +22,9 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_club_owner_events) {
                 return true;
             } else if (item.getItemId() == R.id.nav_club_owner_settings) {
-                startActivity(new Intent(getApplicationContext(), ClubOwnerActivitySettings.class));
+                Intent clubOwnerSettings = new Intent(ClubOwnerActivityEvents.this, ClubOwnerActivitySettings.class);
+                clubOwnerSettings.putExtra("USER", newClubOwner);
+                startActivity(clubOwnerSettings);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
