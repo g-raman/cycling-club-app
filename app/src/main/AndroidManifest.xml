@@ -16,6 +16,14 @@
         android:theme="@style/Theme.GCC"
         tools:targetApi="31">
         <activity
+            android:name=".ClubOwnerEventsParticipants"
+            android:exported="false" />
+        <activity
+            android:name=".Club_owner_event_participents"
+            android:exported="false"
+            android:label="@string/title_activity_club_owner_event_participents"
+            android:theme="@style/Theme.GCC" />
+        <activity
             android:name=".ClubOwnerActivitySettings"
             android:exported="false" />
         <activity
