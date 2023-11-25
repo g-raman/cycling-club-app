@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ClubOwnerActivitySettings">
 
+    <EditText
+        android:id="@+id/clubName"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="225dp"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text="Club Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
@@ -30,68 +43,10 @@
         app:layout_constraintVertical_bias="0.062" />
 
     <EditText
-        android:id="@+id/clubName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:text="Club Name"
-        app:layout_constraintBottom_toTopOf="@+id/clubDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <EditText
-        android:id="@+id/clubDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:text="Description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clubName" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
-        android:text="Contact Info"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clubDescription" />
-
-    <TextView
-        android:id="@+id/clubphonenum"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
-        android:text="Phone Number"
-        app:layout_constraintEnd_toStartOf="@+id/clubPhoneNumber"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <EditText
         android:id="@+id/clubPhoneNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="219dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="60dp"
         android:ems="10"
         android:inputType="phone"
@@ -101,28 +56,72 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/clubEmail"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:text="Email"
-        app:layout_constraintEnd_toStartOf="@+id/clubEmailAddress"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="Contact Info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clubphonenum" />
+        app:layout_constraintTop_toBottomOf="@+id/clubDescription" />
 
     <EditText
         android:id="@+id/clubEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="49dp"
-        android:layout_marginTop="398dp"
-        android:layout_marginEnd="58dp"
+        android:layout_width="219dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="396dp"
+        android:layout_marginEnd="60dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/clubphonenum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:text="Phone Number"
+        app:layout_constraintEnd_toStartOf="@+id/clubPhoneNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/clubEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="20dp"
+        android:text="Email"
+        app:layout_constraintEnd_toStartOf="@+id/clubEmailAddress"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clubphonenum" />
+
+    <EditText
+        android:id="@+id/clubDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text="Description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clubName" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navClubOwner"
@@ -141,5 +140,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_club_owner" />
+
+    <ImageView
+        android:id="@+id/clubImage"
+        android:layout_width="96dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

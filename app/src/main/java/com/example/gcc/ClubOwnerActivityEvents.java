@@ -61,7 +61,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         Intent i = getIntent();
         newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
 
-
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_events);
         nav.setOnItemSelectedListener(item -> {
@@ -79,6 +78,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             return false;
         });
 
-        
+
     }
 }

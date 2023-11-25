@@ -4,11 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -17,9 +24,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class ClubOwnerActivitySettings extends AppCompatActivity {
+
+    private static final int REQUEST_IMAGE_PICK = 1;
+    private Uri selectedImageUri;
     ClubOwner newClubOwner;
     String UUID;
+    DatabaseReference dbClub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +65,8 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         EditText editTextClubDesc = findViewById(R.id.clubDescription);
         EditText editTextclubNumber = findViewById(R.id.clubPhoneNumber);
         EditText editTextclubEmail = findViewById(R.id.clubEmailAddress);
-        DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("clubs").child(UUID);
+        ImageView clubImg = findViewById(R.id.clubImage);
+        dbClub = FirebaseDatabase.getInstance().getReference("clubs").child(UUID);
 
         dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -65,6 +82,14 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 }
                 if (snapshot.child("clubemail").exists()) {
                     editTextclubEmail.setText(snapshot.child("clubemail").getValue().toString());
+                }
+                if (snapshot.child("clubimg").exists()){
+                    String base64Image = snapshot.child("clubimg").getValue(String.class);
+                    byte[] decodedByteArray = Base64.decode(base64Image, Base64.DEFAULT);
+                    // Convert byte array to bitmap
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+                    // Set the bitmap to the ImageView
+                    clubImg.setImageBitmap(bitmap);
                 }
 
 
@@ -90,6 +115,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubname").setValue(editable.toString());
+                Toast.makeText(getApplicationContext(), "name updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextClubDesc.addTextChangedListener(new TextWatcher() {
@@ -106,6 +132,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubdesc").setValue(editable.toString());
+                Toast.makeText(getApplicationContext(), "description updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextclubNumber.addTextChangedListener(new TextWatcher() {
@@ -122,6 +149,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubnumber").setValue(editable.toString());
+                Toast.makeText(getApplicationContext(), "number updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextclubEmail.addTextChangedListener(new TextWatcher() {
@@ -138,7 +166,64 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubemail").setValue(editable.toString());
+                Toast.makeText(getApplicationContext(), "email updated", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+        clubImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_IMAGE_PICK);
+
+
+            }
+        });
+
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
+            selectedImageUri = data.getData();
+            uploadImageToFirebaseDatabase(selectedImageUri);
+        }
+    }
+
+    private void uploadImageToFirebaseDatabase(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            byte[] imageBytes = getBytes(inputStream);
+            String base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            dbClub.child("clubimg").setValue(base64Image)
+                    .addOnSuccessListener(aVoid -> {
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                    });
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Utility method to convert InputStream to byte array
+    private byte[] getBytes(InputStream inputStream) {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        try {
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteBuffer.toByteArray();
     }
 }
