@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ClubOwnerActivityEvents extends AppCompatActivity {
-    interface callBack {
-        void getUUID(String userID);
-    }
+
     ClubOwner newClubOwner;
     ListView listViewEvents;
     DatabaseReference dbEvents;
@@ -31,18 +29,16 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_owner_events);
-        getUserClubID(new callBack() {
+        DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
+        keyGet.addValueEventListener(new ValueEventListener() {
             @Override
-            public void getUUID(String userID) {
-                UUID = userID;
-                dbEvents = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
-                listViewEvents = findViewById(R.id.listEventsView);
-                List<Event> events = new ArrayList<>();
-                dbEvents.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        events.clear();
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot keysnapshot : snapshot.getChildren()) {
+                    if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())){
+                        UUID = keysnapshot.getKey().toString();
+                        listViewEvents = findViewById(R.id.listEventsView);
+                        List<Event> events = new ArrayList<>();
+                        for (DataSnapshot postSnapshot : keysnapshot.child("events").getChildren()){
                             List<String> users = null;
                             for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
                                 users.add(nestedSnapshot.getValue().toString());
@@ -55,12 +51,10 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                         EventList eventAdaptor = new EventList(ClubOwnerActivityEvents.this, events);
                         listViewEvents.setAdapter(eventAdaptor);
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
@@ -85,27 +79,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             return false;
         });
 
-
-
-
+        
     }
-    private void getUserClubID(callBack getUserID){
-        DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
-        keyGet.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot keysnapshot : snapshot.getChildren()) {
-                    if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())){
-                        getUserID.getUUID(keysnapshot.getKey().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
 }

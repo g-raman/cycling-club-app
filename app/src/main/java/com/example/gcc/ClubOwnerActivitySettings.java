@@ -29,7 +29,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         Intent i = getIntent();
         newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
         UUID = (String)i.getSerializableExtra("UUID");
-        Log.d("TAG", newClubOwner.getUsername());
+        Log.d("TAG", UUID);
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_settings);
         nav.setOnItemSelectedListener(item -> {
