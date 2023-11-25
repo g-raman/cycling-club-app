@@ -178,8 +178,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, REQUEST_IMAGE_PICK);
-
-
             }
         });
 
@@ -203,7 +201,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                     .addOnSuccessListener(aVoid -> {
                     })
                     .addOnFailureListener(e -> {
-                        // Handle failure
                     });
 
         } catch (FileNotFoundException e) {
