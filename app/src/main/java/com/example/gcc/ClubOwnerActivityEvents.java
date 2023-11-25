@@ -46,7 +46,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             return false;
         });
 
-        dbEvents = FirebaseDatabase.getInstance().getReference("users").child(newClubOwner.getUsername()).child("events");
+        dbEvents = FirebaseDatabase.getInstance().getReference("clubs").child(newClubOwner.getUsername()).child("events");
         DatabaseReference dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
         listViewEvents = findViewById(R.id.listEventsView);
         List<Event> events = new ArrayList<>();
