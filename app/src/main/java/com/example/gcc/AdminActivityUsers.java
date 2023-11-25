@@ -244,6 +244,24 @@ public class AdminActivityUsers extends AppCompatActivity {
         }
         else {
             acc = new ClubOwner(userPwd,userRole);
+            DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
+            keyGet.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot keysnapshot : snapshot.getChildren()) {
+                        if (keysnapshot.child("username").getValue().toString().equals(oldName)){
+                            String UUID = keysnapshot.getKey().toString();
+                            keyGet.child(UUID).child("username").setValue(userName);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
         dR.setValue(acc);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();

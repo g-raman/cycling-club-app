@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ClubOwnerActivitySettings extends AppCompatActivity {
     ClubOwner newClubOwner;
+    String UUID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
 
         Intent i = getIntent();
         newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
+        UUID = (String)i.getSerializableExtra("UUID");
         Log.d("TAG", newClubOwner.getUsername());
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_settings);
@@ -46,17 +49,25 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         EditText editTextClubDesc = findViewById(R.id.clubDescription);
         EditText editTextclubNumber = findViewById(R.id.clubPhoneNumber);
         EditText editTextclubEmail = findViewById(R.id.clubEmailAddress);
-        DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("users").child(newClubOwner.getUsername());
+        DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("clubs").child(UUID);
 
         dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.child("clubname").exists()) {
                     editTextClubName.setText(snapshot.child("clubname").getValue().toString());
+                }
+                if (snapshot.child("clubdesc").exists()) {
                     editTextClubDesc.setText(snapshot.child("clubdesc").getValue().toString());
+                }
+                if (snapshot.child("clubnumber").exists()) {
                     editTextclubNumber.setText(snapshot.child("clubnumber").getValue().toString());
+                }
+                if (snapshot.child("clubemail").exists()) {
                     editTextclubEmail.setText(snapshot.child("clubemail").getValue().toString());
                 }
+
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -78,7 +89,55 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                dbClub.child("clubname").setValue(editable.toString());
+            }
+        });
+        editTextClubDesc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                dbClub.child("clubdesc").setValue(editable.toString());
+            }
+        });
+        editTextclubNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                dbClub.child("clubnumber").setValue(editable.toString());
+            }
+        });
+        editTextclubEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                dbClub.child("clubemail").setValue(editable.toString());
             }
         });
     }

@@ -121,6 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
                         canUserLogin.canRegister(true);
                         if (role.equals("owner")){
                             ref.child(username).setValue(new ClubOwner(password, role));
+                            DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
+                            String uniqueID = keyGet.push().getKey();
+                            keyGet.child(uniqueID).child("username").setValue(username);
                         } else if (role.equals("user")){
                             ref.child(username).setValue(new User(password, role));
                         }

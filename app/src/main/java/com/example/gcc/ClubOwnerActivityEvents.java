@@ -20,15 +20,53 @@ import java.util.List;
 import java.util.Map;
 
 public class ClubOwnerActivityEvents extends AppCompatActivity {
+    interface callBack {
+        void getUUID(String userID);
+    }
     ClubOwner newClubOwner;
     ListView listViewEvents;
     DatabaseReference dbEvents;
+    String UUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_owner_events);
+        getUserClubID(new callBack() {
+            @Override
+            public void getUUID(String userID) {
+                UUID = userID;
+                dbEvents = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
+                listViewEvents = findViewById(R.id.listEventsView);
+                List<Event> events = new ArrayList<>();
+                dbEvents.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        events.clear();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            List<String> users = null;
+                            for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
+                                users.add(nestedSnapshot.getValue().toString());
+                            }
+                            String[] usersArr = users.toArray(new String[0]);
+                            eventType evtype = postSnapshot.child("eventtype").getValue(eventType.class);
+                            Event newEvent = new Event(postSnapshot.child("eventname").getValue().toString(),evtype,usersArr,postSnapshot.child("starttime").getValue().toString(),postSnapshot.child("location").getValue().toString(),Float.parseFloat(postSnapshot.child("pace").getValue().toString()),Integer.parseInt(postSnapshot.child("level").getValue().toString()));
+                            events.add(newEvent);
+                        }
+                        EventList eventAdaptor = new EventList(ClubOwnerActivityEvents.this, events);
+                        listViewEvents.setAdapter(eventAdaptor);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
         Intent i = getIntent();
         newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
+
 
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_events);
@@ -38,6 +76,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_club_owner_settings) {
                 Intent clubOwnerSettings = new Intent(ClubOwnerActivityEvents.this, ClubOwnerActivitySettings.class);
                 clubOwnerSettings.putExtra("USER", newClubOwner);
+                clubOwnerSettings.putExtra("UUID", UUID);
                 startActivity(clubOwnerSettings);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
@@ -46,26 +85,20 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             return false;
         });
 
-        dbEvents = FirebaseDatabase.getInstance().getReference("clubs").child(newClubOwner.getUsername()).child("events");
-        DatabaseReference dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
-        listViewEvents = findViewById(R.id.listEventsView);
-        List<Event> events = new ArrayList<>();
-        dbEvents.addValueEventListener(new ValueEventListener() {
+
+
+
+    }
+    private void getUserClubID(callBack getUserID){
+        DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
+        keyGet.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                events.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    List<String> users = null;
-                    for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
-                        users.add(nestedSnapshot.getValue().toString());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot keysnapshot : snapshot.getChildren()) {
+                    if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())){
+                        getUserID.getUUID(keysnapshot.getKey().toString());
                     }
-                    String[] usersArr = users.toArray(new String[0]);
-                    eventType evtype = postSnapshot.child("eventtype").getValue(eventType.class);
-                    Event newEvent = new Event(postSnapshot.getKey().toString(),evtype,usersArr,postSnapshot.child("starttime").getValue().toString(),postSnapshot.child("location").getValue().toString(),Float.parseFloat(postSnapshot.child("pace").getValue().toString()),Integer.parseInt(postSnapshot.child("level").getValue().toString()));
-                    events.add(newEvent);
                 }
-                EventList eventAdaptor = new EventList(ClubOwnerActivityEvents.this, events);
-                listViewEvents.setAdapter(eventAdaptor);
             }
 
             @Override
@@ -74,4 +107,5 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             }
         });
     }
+
 }
