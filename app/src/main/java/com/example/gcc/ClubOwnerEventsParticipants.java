@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
 
-public class clubOwnerEventsParticipants extends AppCompatActivity implements Serializable {
+public class ClubOwnerEventsParticipants extends AppCompatActivity implements Serializable {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

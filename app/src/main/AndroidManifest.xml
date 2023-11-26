@@ -25,7 +25,7 @@
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".clubOwnerEventsParticipants"
+            android:name=".ClubOwnerEventsParticipants"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
