@@ -188,7 +188,7 @@ public class AdminActivityUsers extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.dialog_update_account, null);
         dialogBuilder.setView(dialogView);
 
-        String[] Roles = new String[]{"user","owner"};
+        String[] Roles = new String[]{"User","Owner"};
         ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Roles);
         Spinner role = dialogView.findViewById(R.id.spinnerUpdateRole);
         role.setAdapter(roleAdapter);
@@ -208,7 +208,7 @@ public class AdminActivityUsers extends AppCompatActivity {
             role.setSelection(1);
         }
 
-        dialogBuilder.setTitle(userName);
+        dialogBuilder.setTitle("User");
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
