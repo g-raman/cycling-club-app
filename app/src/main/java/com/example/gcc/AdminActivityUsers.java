@@ -269,6 +269,6 @@ public class AdminActivityUsers extends AppCompatActivity {
     private void deleteUser(String name){
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference ("users").child(name);
         dR.removeValue();
-        //Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
     }
 }
