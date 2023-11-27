@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextClubEvName"
+        android:id="@+id/editTextEventName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -14,11 +14,11 @@
         android:layout_marginEnd="32dp"
         android:autofillHints="username"
         android:background="@drawable/round_corners"
-        android:drawableStart="@drawable/ic_clock"
+        android:drawableStart="@drawable/ic_title"
         android:drawablePadding="8dp"
-        android:hint="Start Time"
+        android:hint="Name"
         android:inputType="text|textNoSuggestions"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:autofillHints="username"
         android:background="@drawable/round_corners"
@@ -38,19 +38,19 @@
         android:drawablePadding="8dp"
         android:hint="Start Time"
         android:inputType="text|textNoSuggestions"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEventName" />
 
     <EditText
         android:id="@+id/editTextPace"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:autofillHints="username"
         android:background="@drawable/round_corners"
@@ -58,7 +58,7 @@
         android:drawablePadding="8dp"
         android:hint="Pace"
         android:inputType="text|textNoSuggestions"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -70,7 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:autofillHints="username"
         android:background="@drawable/round_corners"
@@ -78,10 +78,10 @@
         android:drawablePadding="8dp"
         android:hint="Location"
         android:inputType="text|textNoSuggestions"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextStartTime" />
 
@@ -90,7 +90,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/round_bg"
         android:padding="12dp"
@@ -117,32 +117,39 @@
         android:drawablePadding="16dp"
         android:hint="Level"
         android:inputType="text|textNoSuggestions"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textSize="28sp"
         app:drawableTint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextPace" />
 
-    <Spinner
-        android:id="@+id/SpinnerClubevType"
-        android:layout_width="276dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="112dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewClubAddEvType"
-        android:layout_width="60dp"
-        android:layout_height="41dp"
+    <LinearLayout
+        android:id="@+id/spinnerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="120dp"
-        android:text="Type:"
-        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/createEventBtn">
+
+        <TextView
+            android:id="@+id/textViewClubAddEvType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Type:"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/SpinnerClubevType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
