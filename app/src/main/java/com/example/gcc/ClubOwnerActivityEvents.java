@@ -106,7 +106,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.dialog_add_event, null);
         dialogBuilder.setView(dialogView);
 
-        final Button addEvent = dialogView.findViewById(R.id.createEventBtn);
+
 
         DatabaseReference evtype = FirebaseDatabase.getInstance().getReference("eventTypes");
         Spinner evTypeSpinner = dialogView.findViewById(R.id.SpinnerClubevType);
@@ -134,6 +134,9 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         evTypeSpinner.setAdapter(typeAdapter);
 
         //this is the database reference youll be using setvalue to
+
+        final Button addEvent = dialogView.findViewById(R.id.createEventBtn);
+        
         DatabaseReference evadder = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
 
 
