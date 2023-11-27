@@ -141,11 +141,21 @@
         android:id="@+id/clubImage"
         android:layout_width="96dp"
         android:layout_height="74dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/clubEmail2"
+        android:layout_width="84dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="112dp"
+        android:text="Club Image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ public class Event {
     private ClubOwner host;
 
     private eventType type;
-    private String[] users;
+    private User[] users;
     private String startTime;
     private String location;
 
@@ -15,7 +15,7 @@ public class Event {
     private Integer level;
     private String ID;
 
-    public Event(String name,eventType type, String[] participants, String startTime, String location,Float pace, Integer level){
+    public Event(String name,eventType type, User[] participants, String startTime, String location,Float pace, Integer level){
         this.name = name;
         this.type=type;
         this.users=participants;
@@ -25,7 +25,7 @@ public class Event {
         this.level=level;
 
     }
-    public Event(String name,eventType type, String[] participants, String startTime, String location,Float pace, Integer level, String ID){
+    public Event(String name,eventType type, User[] participants, String startTime, String location,Float pace, Integer level, String ID){
         this.name = name;
         this.type=type;
         this.users=participants;
@@ -50,7 +50,7 @@ public class Event {
         return this.host;
     }
 
-    public String[] getUsers() {
+    public User[] getUsers() {
         return this.users;
     }
     public String getStartTime() {
@@ -68,7 +68,7 @@ public class Event {
 
     public String name(){ return  this.name;}
     public  eventType type(){ return this.type;}
-    public String[] users(){ return this.users;}
+    public User[] users(){ return this.users;}
     public String startTime(){ return this.startTime;}
     public String location(){ return this.location;}
     public Float pace(){ return this.pace;}

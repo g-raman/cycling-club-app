@@ -64,7 +64,7 @@ public class AdminActivityClubs extends AppCompatActivity {
         });
 
         dbEventTypes = FirebaseDatabase.getInstance().getReference("eventTypes");
-        listViewEventTypes = findViewById(R.id.listEventTypesView);
+        listViewEventTypes = findViewById(R.id.listClubOwnerEventMembersView);
         List<eventType> eventTypes = new ArrayList<>();
         dbEventTypes.addValueEventListener(new ValueEventListener() {
             @Override

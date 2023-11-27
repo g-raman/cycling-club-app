@@ -34,7 +34,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
     ClubOwner newClubOwner;
     ListView listViewEvents;
     DatabaseReference dbEvents;
-    String UUID;
+    static String UUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +55,13 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot newsnapshot) {
                                 events.clear();
                                 for (DataSnapshot postSnapshot : newsnapshot.getChildren()){
-                                    List<String> users = new ArrayList<>();
+                                    List<User> users = new ArrayList<>();
 
                                     for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
-                                        users.add(nestedSnapshot.getValue().toString());
+                                        users.add(nestedSnapshot.getValue(User.class));
                                     }
                                     if (postSnapshot.hasChild("eventname") && postSnapshot.hasChild("starttime") && postSnapshot.hasChild("location") && postSnapshot.hasChild("pace") && postSnapshot.hasChild("level") && postSnapshot.hasChild("eventtype")) {
-                                        String[] usersArr = users.toArray(new String[0]);
+                                        User[] usersArr = users.toArray(new User[0]);
                                         String newevname = postSnapshot.child("eventname").getValue().toString();
                                         String starttime = postSnapshot.child("starttime").getValue().toString();
                                         String loc = postSnapshot.child("location").getValue().toString();
@@ -119,6 +119,29 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             return false;
         });
 
+        listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Event newEvent = events.get(i);
+                addEventDialog(false,newEvent);
+
+                Button membersSelButton = listViewEvents.findViewById(R.id.clubOwnerListSelectMembers);
+
+                membersSelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMembersList(newEvent);
+                    }
+                });
+                return true;
+
+            }
+        });
+
+
+
+
+
         Button addEvButton = findViewById(R.id.addEventBtn);
 
         addEvButton.setOnClickListener(new View.OnClickListener() {
@@ -127,14 +150,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 addEventDialog(true, null);
             }
         });
-        listViewEvents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Event newEvent = events.get(i);
-                addEventDialog(false,newEvent);
-                return true;
-            }
-        });
+
 
 
 
@@ -245,7 +261,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                         evadder.child(eventID).child("eventname").setValue(name.getText().toString());
                         evadder.child(eventID).child("starttime").setValue(startTime.getText().toString());
                         evadder.child(eventID).child("location").setValue(location.getText().toString());
-                        evadder.child(eventID).child("users").child("0").setValue("");
+                        evadder.child(eventID).child("users").setValue(null);
                         evadder.child(eventID).child("eventtype").setValue(selectedEventType);
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
                     }
@@ -257,6 +273,39 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     Log.d("TAG", "BAD");
                 }
 
+            }
+        });
+
+
+    }
+    public static String getUUID(){ return UUID; }
+
+    private void showMembersList(Event event){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this); // Use the context variable
+        LayoutInflater inflater = getLayoutInflater(); // Obtain LayoutInflater from the context
+
+        final View dialogView = inflater.inflate(R.layout.activity_club_owner_events_participants, null);
+        dialogBuilder.setView(dialogView);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        List<String> Usernames = new ArrayList<>();
+        ListView listView = dialogView.findViewById(R.id.listClubOwnerEventMembersView);
+
+        for (User newUser : event.getUsers()){
+            Usernames.add(newUser.getUsername());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Usernames);
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clubs").child(ClubOwnerActivityEvents.getUUID()).child("events").child(Usernames.get(position));
+                ref.removeValue();
+                return false;
             }
         });
     }
