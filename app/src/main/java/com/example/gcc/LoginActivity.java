@@ -16,8 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     interface callBack {
@@ -63,7 +65,26 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(adminActivity);
                         finish();
                     } else if (role.equals("owner")) {
+                        DatabaseReference keyGet = FirebaseDatabase.getInstance().getReference("clubs");
                         Intent clubOwnerMenu = new Intent(LoginActivity.this, ClubOwnerActivityEvents.class);
+                        keyGet.addValueEventListener(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                 Boolean hold=false;
+                                 for (DataSnapshot keysnapshot : snapshot.getChildren()) {
+                                     if (((keysnapshot.child("username").getValue().toString()).equals(username))) {
+                                         hold=true;
+                                     }
+                                 }
+                                 if (hold==false){
+                                     String uniqueID = keyGet.push().getKey();
+                                     keyGet.child(uniqueID).child("username").setValue(username);
+                                 }
+                             }
+
+                             public void onCancelled(@NonNull DatabaseError error) {
+                             }
+                         });
                         newClubOwner = new ClubOwner(username, password, role);
                         clubOwnerMenu.putExtra("USER", newClubOwner);
                         startActivity(clubOwnerMenu);

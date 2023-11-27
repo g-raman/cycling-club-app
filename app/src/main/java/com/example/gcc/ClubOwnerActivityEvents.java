@@ -106,8 +106,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.dialog_add_event, null);
         dialogBuilder.setView(dialogView);
 
-
-
         DatabaseReference evtype = FirebaseDatabase.getInstance().getReference("eventTypes");
         Spinner evTypeSpinner = dialogView.findViewById(R.id.SpinnerClubevType);
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item);
@@ -118,7 +116,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 for (DataSnapshot newsnapshot : snapshot.getChildren()){
                     if (newsnapshot.child("status").getValue().toString().equals("true")) {
                         evTypeNames.add(newsnapshot.getKey().toString());
-                        Log.d("TAG",evTypeNames.get(0));
                     }
                 }
                 String[] evtypeArr = evTypeNames.toArray(new String[0]);
@@ -136,7 +133,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         //this is the database reference youll be using setvalue to
 
         final Button addEvent = dialogView.findViewById(R.id.createEventBtn);
-        
+
         DatabaseReference evadder = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
 
 
