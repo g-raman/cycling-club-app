@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                  for (DataSnapshot keysnapshot : snapshot.getChildren()) {
                                      if (((keysnapshot.child("username").getValue().toString()).equals(username))) {
                                          hold=true;
+                                         break;
                                      }
                                  }
                                  if (hold==false){

@@ -6,22 +6,34 @@ public class Event {
     private ClubOwner host;
 
     private eventType type;
-    private String[] participants;
+    private String[] users;
     private String startTime;
     private String location;
 
     private Float pace;
 
     private Integer level;
+    private String ID;
 
     public Event(String name,eventType type, String[] participants, String startTime, String location,Float pace, Integer level){
         this.name = name;
         this.type=type;
-        this.participants=participants;
+        this.users=participants;
         this.startTime=startTime;
         this.location=location;
         this.pace=pace;
         this.level=level;
+
+    }
+    public Event(String name,eventType type, String[] participants, String startTime, String location,Float pace, Integer level, String ID){
+        this.name = name;
+        this.type=type;
+        this.users=participants;
+        this.startTime=startTime;
+        this.location=location;
+        this.pace=pace;
+        this.level=level;
+        this.ID = ID;
 
     }
     public String getName(){
@@ -38,8 +50,8 @@ public class Event {
         return this.host;
     }
 
-    public String[] getParticipants() {
-        return this.participants;
+    public String[] getUsers() {
+        return this.users;
     }
     public String getStartTime() {
         return this.startTime;
@@ -51,6 +63,15 @@ public class Event {
     public eventType getType(){
         return type;
     }
+
+    public String getID() { return this.ID; }
+
+    public String name(){ return  this.name;}
+    public  eventType type(){ return this.type;}
+    public String[] users(){ return this.users;}
+    public String startTime(){ return this.startTime;}
+    public String location(){ return this.location;}
+    public Float pace(){ return this.pace;}
     public void setHost(ClubOwner host) {
         this.host = host;
     }

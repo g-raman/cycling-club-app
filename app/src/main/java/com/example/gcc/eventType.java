@@ -76,4 +76,9 @@ public class eventType {
     public void age(Integer age) {
         this.age = age;
     }
+
+    public String toString() {
+        return name; // Return the 'name' property when converting to a string
+    }
+
 }
