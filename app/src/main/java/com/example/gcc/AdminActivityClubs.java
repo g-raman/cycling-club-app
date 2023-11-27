@@ -169,7 +169,7 @@ public class AdminActivityClubs extends AppCompatActivity {
     private void showUpdateDeleteDialog(final String eventName,String eventDesc,float minPace,float maxPace,int Age,int Level, Boolean status) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.eventtype_update_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_update_event_type, null);
         dialogBuilder.setView(dialogView);
 
         String[] Roles = new String[]{"Available","Hidden"};
