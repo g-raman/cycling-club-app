@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextEventName"
+        android:id="@+id/clubOwnerEditEventname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextStartTime"
+        android:id="@+id/clubOwnerEditStartTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -43,10 +43,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEventName" />
+        app:layout_constraintTop_toBottomOf="@+id/clubOwnerEditEventname" />
 
     <EditText
-        android:id="@+id/editTextPace"
+        android:id="@+id/clubOwnerEditPace"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -63,10 +63,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextLocation" />
+        app:layout_constraintTop_toBottomOf="@id/clubOwnerEditLocation" />
 
     <EditText
-        android:id="@+id/editTextLocation"
+        android:id="@+id/clubOwnerEditLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -83,10 +83,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextStartTime" />
+        app:layout_constraintTop_toBottomOf="@id/clubOwnerEditStartTime" />
 
     <Button
-        android:id="@+id/createEventBtn"
+        android:id="@+id/clubOwnerCreateEvent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -102,10 +102,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLevel" />
+        app:layout_constraintTop_toBottomOf="@+id/clubOwnerEditLevel" />
 
     <EditText
-        android:id="@+id/editTextLevel"
+        android:id="@+id/clubOwnerEditLevel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -122,7 +122,7 @@
         app:drawableTint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextPace" />
+        app:layout_constraintTop_toBottomOf="@id/clubOwnerEditPace" />
 
     <LinearLayout
         android:id="@+id/spinnerContainer"
@@ -132,15 +132,17 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/createEventBtn">
+        app:layout_constraintTop_toBottomOf="@id/clubOwnerCreateEvent">
 
         <TextView
             android:id="@+id/textViewClubAddEvType"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Type:"
             android:textSize="20sp" />
@@ -148,7 +150,7 @@
         <Spinner
             android:id="@+id/SpinnerClubevType"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
 

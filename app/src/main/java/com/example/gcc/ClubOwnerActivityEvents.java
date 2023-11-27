@@ -1,8 +1,5 @@
 package com.example.gcc;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-import static java.security.AccessController.getContext;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ClubOwnerActivityEvents extends AppCompatActivity {
 
@@ -131,16 +127,29 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         evTypeSpinner.setAdapter(typeAdapter);
 
         //this is the database reference youll be using setvalue to
+        final Button addEvent = dialogView.findViewById(R.id.clubOwnerCreateEvent);
+        EditText name = dialogView.findViewById(R.id.clubOwnerEditEventname);
+        EditText startTime = dialogView.findViewById(R.id.clubOwnerEditStartTime);
+        EditText location = dialogView.findViewById(R.id.clubOwnerEditLocation);
+        EditText pace = dialogView.findViewById(R.id.clubOwnerEditPace);
+        EditText level = dialogView.findViewById(R.id.clubOwnerEditLevel);
 
-        final Button addEvent = dialogView.findViewById(R.id.createEventBtn);
-
-        DatabaseReference evadder = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
-
-
-
-
-        dialogBuilder.setTitle("add Event");
+        dialogBuilder.setTitle("Add Event");
         final AlertDialog b = dialogBuilder.create();
         b.show();
+
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference evadder = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
+
+                evadder.child("name").setValue(name.getText().toString());
+                evadder.child("startTime").setValue(startTime.getText().toString());
+                evadder.child("location").setValue(location.getText().toString());
+                evadder.child("pace").setValue(pace.getText().toString());
+                evadder.child("level").setValue(level.getText().toString());
+                b.dismiss();
+            }
+        });
     }
 }
