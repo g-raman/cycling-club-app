@@ -185,7 +185,7 @@ public class AdminActivityUsers extends AppCompatActivity {
     private void showUpdateDeleteDialog(final String userName,String userpwd,String userRole) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.account_update_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_update_account, null);
         dialogBuilder.setView(dialogView);
 
         String[] Roles = new String[]{"user","owner"};
