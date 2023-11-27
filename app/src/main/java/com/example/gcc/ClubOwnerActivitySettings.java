@@ -115,7 +115,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubname").setValue(editable.toString());
-                Toast.makeText(getApplicationContext(), "name updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextClubDesc.addTextChangedListener(new TextWatcher() {
@@ -132,7 +131,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubdesc").setValue(editable.toString());
-                Toast.makeText(getApplicationContext(), "description updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextclubNumber.addTextChangedListener(new TextWatcher() {
@@ -149,7 +147,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubnumber").setValue(editable.toString());
-                Toast.makeText(getApplicationContext(), "number updated", Toast.LENGTH_SHORT).show();
             }
         });
         editTextclubEmail.addTextChangedListener(new TextWatcher() {
@@ -166,7 +163,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 dbClub.child("clubemail").setValue(editable.toString());
-                Toast.makeText(getApplicationContext(), "email updated", Toast.LENGTH_SHORT).show();
             }
         });
 

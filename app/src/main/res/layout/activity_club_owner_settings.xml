@@ -44,13 +44,14 @@
 
     <EditText
         android:id="@+id/clubPhoneNumber"
-        android:layout_width="219dp"
-        android:layout_height="53dp"
+        android:layout_width="204dp"
+        android:layout_height="51dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="60dp"
         android:ems="10"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/clubphonenum"
         app:layout_constraintTop_toBottomOf="@+id/clubDescription"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -72,7 +73,7 @@
 
     <EditText
         android:id="@+id/clubEmailAddress"
-        android:layout_width="219dp"
+        android:layout_width="204dp"
         android:layout_height="54dp"
         android:layout_marginTop="396dp"
         android:layout_marginEnd="60dp"
@@ -84,28 +85,23 @@
 
     <TextView
         android:id="@+id/clubphonenum"
-        android:layout_width="0dp"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="468dp"
         android:text="Phone Number"
-        app:layout_constraintEnd_toStartOf="@+id/clubPhoneNumber"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/clubEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="39dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="408dp"
         android:text="Email"
-        app:layout_constraintEnd_toStartOf="@+id/clubEmailAddress"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clubphonenum" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/clubDescription"
