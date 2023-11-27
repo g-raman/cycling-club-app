@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -85,6 +86,9 @@ public class AdminActivityUsers extends AppCompatActivity {
                 }
                 AccountList accountAdaptor = new AccountList(AdminActivityUsers.this, Accounts);
 
+                LayoutInflater inflater = getLayoutInflater();
+                ViewGroup header = (ViewGroup) inflater.inflate(R.layout.layout_account_list_header, listViewAccounts, false);
+                listViewAccounts.addHeaderView(header, null, false);
                 listViewAccounts.setAdapter(accountAdaptor);
             }
 

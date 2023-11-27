@@ -30,9 +30,9 @@ public class AccountList extends ArrayAdapter<Account> {
 
 
         Account account = accounts.get(position);
-        textViewName.setText("Name: "+ account.getUsername());
-        textViewPassword.setText("Pwd: "+ account.getPassword());
-        textViewRole.setText("Role: "+ account.getRole());
+        textViewName.setText(account.getUsername());
+        textViewPassword.setText(account.getPassword());
+        textViewRole.setText(account.getRole());
         return listViewItem;
     }
 }
