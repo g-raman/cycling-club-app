@@ -257,6 +257,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                         evadder.child(eventID).child("users").setValue(null);
                         evadder.child(eventID).child("eventtype").setValue(selectedEventType);
                         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                        b.dismiss();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "ensure values are within the correct bounds", Toast.LENGTH_SHORT).show();
