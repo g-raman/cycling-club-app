@@ -8,12 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PatternMatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -137,87 +137,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             }
         });
 
-        // Adding a TextWatcher to the EditText
-        editTextClubName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                dbClub.child("clubname").setValue(editable.toString());
-            }
-        });
-        editTextClubDesc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                dbClub.child("clubdesc").setValue(editable.toString());
-            }
-        });
-        editTextclubNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                dbClub.child("clubnumber").setValue(editable.toString());
-            }
-        });
-        editTextclubEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                dbClub.child("clubemail").setValue(editable.toString());
-            }
-        });
-        editTextclubSocialMedia.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                dbClub.child("clubsocial").setValue(editable.toString());
-            }
-        });
 
 
         clubImg.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +147,36 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_IMAGE_PICK);
             }
         });
+
+        Button chngSettings = findViewById(R.id.changeEventSettingsBtn);
+        
+        chngSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateInstagramLink(editTextclubSocialMedia.getText().toString())){
+                    dbClub.child("clubsocial").setValue(editTextclubSocialMedia.getText().toString());
+                }
+                else {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Instagram link.", Toast.LENGTH_SHORT).show();
+                }
+                if (validatePhoneNum(editTextclubNumber.getText().toString())){
+                    dbClub.child("clubnumber").setValue(editTextclubNumber.getText().toString());
+                }
+                else {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Number.", Toast.LENGTH_SHORT).show();
+                }
+                if (validateEmail(editTextclubEmail.getText().toString())){
+                    dbClub.child("clubemail").setValue(editTextclubEmail.getText().toString());
+                }
+                else {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Email.", Toast.LENGTH_SHORT).show();
+                }
+                dbClub.child("clubdesc").setValue(editTextClubDesc.getText().toString());
+                dbClub.child("clubname").setValue(editTextClubName.getText().toString());
+
+            }
+        });
+
 
 
     }
