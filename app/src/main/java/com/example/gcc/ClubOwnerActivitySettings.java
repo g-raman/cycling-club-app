@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PatternMatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -28,6 +29,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClubOwnerActivitySettings extends AppCompatActivity {
 
@@ -37,14 +40,43 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
     String UUID;
     DatabaseReference dbClub;
 
+    public boolean validatePhoneNum(String phoneNum) {
+        /**
+         * Checks for an plus sign for country code
+         * Checks for an optional country code
+         * Checks for an optional area code
+         * Checks for 10 digits
+         */
+        Pattern pattern = Pattern.compile("^\\+?1?\\s*\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$");
+        Matcher matcher = pattern.matcher(phoneNum);
+
+        return matcher.matches();
+    }
+
+    public boolean validateEmail(String email) {
+        String regex = "^[a-zA-Z0-9_][a-zA-Z0-9_]+@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9_]+)";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CASE);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
+    }
+
+    public boolean validateInstagramLink(String link) {
+        String regex = "^(https?:\\/\\/)?(www\\.)?instagram\\.com\\/[a-zA-Z0-9_]+\\/?$";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CASE);
+        Matcher matcher = pattern.matcher(link);
+
+        return matcher.matches();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_owner_settings);
 
         Intent i = getIntent();
-        newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
-        UUID = (String)i.getSerializableExtra("UUID");
+        newClubOwner = (ClubOwner) i.getSerializableExtra("USER");
+        UUID = (String) i.getSerializableExtra("UUID");
         Log.d("TAG", UUID);
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_settings);
@@ -98,6 +130,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
 
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -185,7 +218,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 dbClub.child("clubsocial").setValue(editable.toString());
             }
         });
-
 
 
         clubImg.setOnClickListener(new View.OnClickListener() {
