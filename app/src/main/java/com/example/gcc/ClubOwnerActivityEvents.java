@@ -212,9 +212,9 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             }
         }
 
-        typeText.setText("Text: ");
+        typeText.setText("Type:");
 
-        dialogBuilder.setTitle("Add Event");
+        dialogBuilder.setTitle("Your Event");
         final AlertDialog b = dialogBuilder.create();
         b.show();
 

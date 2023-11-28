@@ -7,9 +7,12 @@
 
     <LinearLayout
         android:id="@+id/spinnerContainer"
-        android:layout_width="343dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:orientation="horizontal"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -23,16 +26,16 @@
         <TextView
             android:id="@+id/textViewClubAddEvType"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Type:"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/SpinnerClubevType"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -43,6 +46,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/round_bg"
         android:padding="12dp"
         android:text="CREATE"
@@ -50,17 +54,18 @@
         android:textSize="28sp"
         android:textStyle="bold"
         app:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clubOwnerEditLevel" />
+        app:layout_constraintTop_toBottomOf="@+id/clubOwnerEditLevel"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/clubOwnerEditEventname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
         android:layout_marginEnd="32dp"
         android:autofillHints="username"
         android:background="@drawable/round_corners"
@@ -69,11 +74,11 @@
         android:hint="Name"
         android:inputType="text|textNoSuggestions"
         android:padding="10dp"
-        android:textSize="28sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerContainer" />
 
     <EditText
         android:id="@+id/clubOwnerEditStartTime"
@@ -89,7 +94,7 @@
         android:hint="Start Time"
         android:inputType="text|textNoSuggestions"
         android:padding="10dp"
-        android:textSize="28sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +114,7 @@
         android:hint="Pace"
         android:inputType="text|textNoSuggestions"
         android:padding="10dp"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +134,7 @@
         android:hint="Location"
         android:inputType="text|textNoSuggestions"
         android:padding="10dp"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +154,7 @@
         android:hint="Level"
         android:inputType="text|textNoSuggestions"
         android:padding="10dp"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:drawableTint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
