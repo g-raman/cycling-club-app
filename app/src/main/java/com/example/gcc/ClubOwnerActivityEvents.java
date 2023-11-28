@@ -125,14 +125,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 Event newEvent = events.get(i);
                 addEventDialog(false,newEvent);
 
-                Button membersSelButton = listViewEvents.findViewById(R.id.clubOwnerListSelectMembers);
 
-                membersSelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMembersList(newEvent);
-                    }
-                });
                 return true;
 
             }
@@ -280,33 +273,5 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
     }
     public static String getUUID(){ return UUID; }
 
-    private void showMembersList(Event event){
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this); // Use the context variable
-        LayoutInflater inflater = getLayoutInflater(); // Obtain LayoutInflater from the context
 
-        final View dialogView = inflater.inflate(R.layout.activity_club_owner_events_participants, null);
-        dialogBuilder.setView(dialogView);
-
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-
-        List<String> Usernames = new ArrayList<>();
-        ListView listView = dialogView.findViewById(R.id.listClubOwnerEventMembersView);
-
-        for (User newUser : event.getUsers()){
-            Usernames.add(newUser.getUsername());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Usernames);
-
-        listView.setAdapter(adapter);
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clubs").child(ClubOwnerActivityEvents.getUUID()).child("events").child(Usernames.get(position));
-                ref.removeValue();
-                return false;
-            }
-        });
-    }
 }
