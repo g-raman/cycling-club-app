@@ -40,6 +40,34 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
     String UUID;
     DatabaseReference dbClub;
 
+    public boolean validatePhoneNum(String phoneNum) {
+        /**
+         * Checks for an plus sign for country code
+         * Checks for an optional country code
+         * Checks for an optional area code
+         * Checks for 10 digits
+         */
+        Pattern pattern = Pattern.compile("^\\+?1?\\s*\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$");
+        Matcher matcher = pattern.matcher(phoneNum);
+
+        return matcher.matches();
+    }
+
+    public boolean validateEmail(String email) {
+        String regex = "^[a-zA-Z0-9_][a-zA-Z0-9_]+@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9_]+)";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CASE);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
+    }
+
+    public boolean validateInstagramLink(String link) {
+        String regex = "^(https?:\\/\\/)?(www\\.)?instagram\\.com\\/[a-zA-Z0-9_]+\\/?$";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CASE);
+        Matcher matcher = pattern.matcher(link);
+
+        return matcher.matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
