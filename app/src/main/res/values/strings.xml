@@ -44,4 +44,5 @@
     <string name="dashRange">-</string>
     <string name="min">Min</string>
     <string name="max">Max</string>
+    <string name="clubOwnersettingsBtn">Change Settings</string>
 </resources>

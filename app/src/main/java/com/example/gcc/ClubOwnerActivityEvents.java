@@ -5,7 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +51,32 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 for (DataSnapshot keysnapshot : snapshot.getChildren()) {
                     if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())){
                         UUID = keysnapshot.getKey().toString();
+
+                        DatabaseReference chngeSettings = keyGet.child(UUID);
+                        chngeSettings.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (!(snapshot.child("clubname").exists()
+                                        && (snapshot.child("clubdesc").exists())
+                                        && (snapshot.child("clubdesc").exists())
+                                        && (snapshot.child("clubnumber").exists())
+                                        && (snapshot.child("clubemail").exists())
+                                        && (snapshot.child("clubsocial").exists()))) {
+                                    Intent clubOwnerSettings = new Intent(ClubOwnerActivityEvents.this, ClubOwnerActivitySettings.class);
+                                    clubOwnerSettings.putExtra("USER", newClubOwner);
+                                    clubOwnerSettings.putExtra("UUID", UUID);
+                                    startActivity(clubOwnerSettings);
+                                    finish();
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         DatabaseReference evRef = keyGet.child(UUID).child("events");
                         evRef.addValueEventListener(new ValueEventListener() {

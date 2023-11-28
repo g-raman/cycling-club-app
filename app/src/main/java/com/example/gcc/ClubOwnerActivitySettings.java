@@ -12,6 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,8 +80,14 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         newClubOwner = (ClubOwner) i.getSerializableExtra("USER");
         UUID = (String) i.getSerializableExtra("UUID");
         Log.d("TAG", UUID);
+
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_settings);
+        Menu menu = nav.getMenu();
+
+        // Find the specific menu item by its ID
+        MenuItem menuItem = menu.findItem(R.id.nav_club_owner_events);
+
         nav.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_club_owner_settings) {
                 return true;
@@ -99,25 +107,45 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         EditText editTextclubEmail = findViewById(R.id.clubEmailAddress);
         EditText editTextclubSocialMedia = findViewById(R.id.clubSocialMediaHandle);
         ImageView clubImg = findViewById(R.id.clubImage);
+        Button chngSettings = findViewById(R.id.changeEventSettingsBtn);
         dbClub = FirebaseDatabase.getInstance().getReference("clubs").child(UUID);
 
-        dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbClub.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("clubname").exists()) {
                     editTextClubName.setText(snapshot.child("clubname").getValue().toString());
+                } else {
+                    menuItem.setVisible(false);
+                    chngSettings.setText("Set Settings");
                 }
                 if (snapshot.child("clubdesc").exists()) {
                     editTextClubDesc.setText(snapshot.child("clubdesc").getValue().toString());
                 }
+                else {
+                    menuItem.setVisible(false);
+                    chngSettings.setText("Set Settings");
+                }
                 if (snapshot.child("clubnumber").exists()) {
                     editTextclubNumber.setText(snapshot.child("clubnumber").getValue().toString());
+                }
+                else {
+                    menuItem.setVisible(false);
+                    chngSettings.setText("Set Settings");
                 }
                 if (snapshot.child("clubemail").exists()) {
                     editTextclubEmail.setText(snapshot.child("clubemail").getValue().toString());
                 }
+                else {
+                    menuItem.setVisible(false);
+                    chngSettings.setText("Set Settings");
+                }
                 if (snapshot.child("clubsocial").exists()){
                     editTextclubSocialMedia.setText(snapshot.child("clubsocial").getValue().toString());
+                }
+                else {
+                    menuItem.setVisible(false);
+                    chngSettings.setText("Set Settings");
                 }
                 if (snapshot.child("clubimg").exists()){
                     String base64Image = snapshot.child("clubimg").getValue(String.class);
@@ -126,6 +154,14 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
                     // Set the bitmap to the ImageView
                     clubImg.setImageBitmap(bitmap);
+                }
+                if ((snapshot.child("clubname").exists()
+                        && (snapshot.child("clubdesc").exists())
+                        && (snapshot.child("clubdesc").exists())
+                        && (snapshot.child("clubnumber").exists())
+                        && (snapshot.child("clubemail").exists())
+                        && (snapshot.child("clubsocial").exists()))) {
+                    menuItem.setVisible(true);
                 }
 
 
@@ -148,7 +184,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
             }
         });
 
-        Button chngSettings = findViewById(R.id.changeEventSettingsBtn);
+
         
         chngSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +209,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 }
                 dbClub.child("clubdesc").setValue(editTextClubDesc.getText().toString());
                 dbClub.child("clubname").setValue(editTextClubName.getText().toString());
+
 
             }
         });
