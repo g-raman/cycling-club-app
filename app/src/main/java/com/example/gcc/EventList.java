@@ -1,23 +1,11 @@
 package com.example.gcc;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventList extends ArrayAdapter<Event> {
@@ -47,18 +35,11 @@ public class EventList extends ArrayAdapter<Event> {
         Event newEvent = events.get(position);
         textViewEventName.setText(newEvent.getName());
         textViewEventType.setText(newEvent.getType().getName());
-        textViewStartTime.setText("StartTime: " +newEvent.getStartTime());
-        textViewEventLocation.setText("Location: "+newEvent.getLocation());
-        textViewPace.setText("Pace: "+newEvent.getPace().toString());
-        textViewLevel.setText("Level: "+newEvent.getLevel());
-
-
-
-
+        textViewStartTime.setText(newEvent.getStartTime());
+        textViewEventLocation.setText(String.format(newEvent.getLocation()));
+        textViewPace.setText(String.format(newEvent.getPace().toString()));
+        textViewLevel.setText(String.format(newEvent.getLevel().toString()));
 
         return listViewItem;
     }
-
-
-
 }
