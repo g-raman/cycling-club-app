@@ -65,6 +65,7 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         EditText editTextClubDesc = findViewById(R.id.clubDescription);
         EditText editTextclubNumber = findViewById(R.id.clubPhoneNumber);
         EditText editTextclubEmail = findViewById(R.id.clubEmailAddress);
+        EditText editTextclubSocialMedia = findViewById(R.id.clubSocialMediaHandle);
         ImageView clubImg = findViewById(R.id.clubImage);
         dbClub = FirebaseDatabase.getInstance().getReference("clubs").child(UUID);
 
@@ -82,6 +83,9 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 }
                 if (snapshot.child("clubemail").exists()) {
                     editTextclubEmail.setText(snapshot.child("clubemail").getValue().toString());
+                }
+                if (snapshot.child("clubsocial").exists()){
+                    editTextclubSocialMedia.setText(snapshot.child("clubsocial").getValue().toString());
                 }
                 if (snapshot.child("clubimg").exists()){
                     String base64Image = snapshot.child("clubimg").getValue(String.class);
@@ -165,6 +169,22 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 dbClub.child("clubemail").setValue(editable.toString());
             }
         });
+        editTextclubSocialMedia.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                dbClub.child("clubsocial").setValue(editable.toString());
+            }
+        });
 
 
 
@@ -184,6 +204,17 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
+            ImageView clubImg = findViewById(R.id.clubImage);
+            InputStream inputStream = null;
+            try {
+                inputStream = getContentResolver().openInputStream(selectedImageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                clubImg.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+
             uploadImageToFirebaseDatabase(selectedImageUri);
         }
     }

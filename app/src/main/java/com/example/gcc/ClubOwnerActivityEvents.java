@@ -190,8 +190,12 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         EditText pace = dialogView.findViewById(R.id.clubOwnerEditPace);
         EditText level = dialogView.findViewById(R.id.clubOwnerEditLevel);
         TextView typeText = dialogView.findViewById(R.id.textViewClubAddEvType);
+        Button deleteEvent = dialogView.findViewById(R.id.clubOwnerDeleteEvent);
+
+
 
         if (creating==false){
+
             name.setText(updateEvent.getName());
             startTime.setText(updateEvent.getStartTime());
             location.setText(updateEvent.getLocation());
@@ -203,11 +207,12 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     break;
                 }
             }
+        } else if (creating){
+            deleteEvent.setVisibility(View.INVISIBLE);
         }
 
         typeText.setText("Type:");
 
-        dialogBuilder.setTitle("Your Event");
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
@@ -226,6 +231,16 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             }
 
 
+        });
+
+        deleteEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference evdel = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events").child(updateEvent.getID());
+                evdel.removeValue();
+                b.dismiss();
+
+            }
         });
 
 
