@@ -58,7 +58,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (!(snapshot.child("clubname").exists()
                                         && (snapshot.child("clubdesc").exists())
-                                        && (snapshot.child("clubdesc").exists())
                                         && (snapshot.child("clubnumber").exists())
                                         && (snapshot.child("clubemail").exists())
                                         && (snapshot.child("clubsocial").exists()))) {

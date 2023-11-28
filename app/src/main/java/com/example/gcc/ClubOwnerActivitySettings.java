@@ -157,7 +157,6 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 }
                 if ((snapshot.child("clubname").exists()
                         && (snapshot.child("clubdesc").exists())
-                        && (snapshot.child("clubdesc").exists())
                         && (snapshot.child("clubnumber").exists())
                         && (snapshot.child("clubemail").exists())
                         && (snapshot.child("clubsocial").exists()))) {
