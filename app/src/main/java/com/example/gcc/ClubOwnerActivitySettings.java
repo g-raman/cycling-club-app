@@ -197,40 +197,34 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 String phoneNum = editTextclubNumber.getText().toString();
                 String email =  editTextclubEmail.getText().toString();
                 String clubName = editTextClubName.getText().toString();
-                boolean allSucceeded = true;
 
-                if (validateInstagramLink(instagramLink)){
-                    dbClub.child("clubsocial").setValue(instagramLink);
-                } else {
-                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Instagram link.", Toast.LENGTH_SHORT).show();
-                    allSucceeded = false;
-                }
-
-                if (validatePhoneNum(phoneNum)){
-                    dbClub.child("clubnumber").setValue(phoneNum);
-                } else {
-                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Number.", Toast.LENGTH_SHORT).show();
-                    allSucceeded = false;
-                }
-
-                if (validateEmail(email)){
-                    dbClub.child("clubemail").setValue(email);
-                } else {
-                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Email.", Toast.LENGTH_SHORT).show();
-                    allSucceeded = false;
-                }
-
-                if (validateClubName(clubName)) {
-                    dbClub.child("clubname").setValue(editTextClubName.getText().toString());
-                } else {
+                if (!validateClubName(clubName)) {
                     Toast.makeText(ClubOwnerActivitySettings.this, "Choose a valid club name", Toast.LENGTH_SHORT).show();
-                    allSucceeded = false;
+                    return;
                 }
+
+                if (!validateEmail(email)) {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validatePhoneNum(phoneNum)) {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Number.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validateInstagramLink(instagramLink)) {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Instagram link.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbClub.child("clubname").setValue(editTextClubName.getText().toString());
+                dbClub.child("clubemail").setValue(email);
+                dbClub.child("clubnumber").setValue(phoneNum);
+                dbClub.child("clubsocial").setValue(instagramLink);
                 dbClub.child("clubdesc").setValue(editTextClubDesc.getText().toString());
                 
-                if (allSucceeded) {
-                    Toast.makeText(ClubOwnerActivitySettings.this, "Updated info", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(ClubOwnerActivitySettings.this, "Updated info", Toast.LENGTH_SHORT).show();
             }
         });
     }
