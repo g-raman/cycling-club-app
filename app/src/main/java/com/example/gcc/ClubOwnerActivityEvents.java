@@ -324,19 +324,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 float paceMin = selectedEventType.getPaceMin();
                 int maxLevel = selectedEventType.getLevel();
 
-                try {
-                    paceNum = Float.parseFloat(paceString);
-                } catch (Exception ignored) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, "Pace must be a decimal value", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                try {
-                    levelNum = Integer.parseInt(levelString);
-                } catch (Exception ignored) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, "Level must be an integer", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 if (!validateEventName(eventName)) {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Enter valid event name", Toast.LENGTH_SHORT).show();
@@ -353,13 +340,28 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     return;
                 }
 
+                try {
+                    paceNum = Float.parseFloat(paceString);
+                } catch (Exception ignored) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Pace must be a decimal value", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 if (!validatePace(paceNum, paceMin, paceMax)) {
                     Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter pace between %.2f - %.2f", paceMin, paceMax), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                try {
+                    levelNum = Integer.parseInt(levelString);
+                } catch (Exception ignored) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Level must be an integer", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!validateLevel(levelNum, maxLevel)) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter 0 <= level <= %d", maxLevel), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter level between 0-%d", maxLevel), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
