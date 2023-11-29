@@ -71,6 +71,11 @@ public class AdminActivityUsers extends AppCompatActivity {
         dbUsers = FirebaseDatabase.getInstance().getReference("users");
 
         listViewAccounts = findViewById(R.id.listUsersView);
+
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.layout_account_list_header, listViewAccounts, false);
+        listViewAccounts.addHeaderView(header, null, false);
+
         List<Account> Accounts = new ArrayList<>();
         Button addUserBtn = findViewById(R.id.addUserBtn);
 
@@ -86,9 +91,6 @@ public class AdminActivityUsers extends AppCompatActivity {
                 }
                 AccountList accountAdaptor = new AccountList(AdminActivityUsers.this, Accounts);
 
-                LayoutInflater inflater = getLayoutInflater();
-                ViewGroup header = (ViewGroup) inflater.inflate(R.layout.layout_account_list_header, listViewAccounts, false);
-                listViewAccounts.addHeaderView(header, null, false);
                 listViewAccounts.setAdapter(accountAdaptor);
             }
 
@@ -137,12 +139,14 @@ public class AdminActivityUsers extends AppCompatActivity {
                     }
                 }, username, password, role);
 
+                usernameField.setText("");
+                passwordField.setText("");
             }
         });
         listViewAccounts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Account account = Accounts.get(i);
+                Account account = Accounts.get(i - 1);
                 showUpdateDeleteDialog(account.getUsername(), account.getPassword(),account.getRole());
                 return true;
             }
