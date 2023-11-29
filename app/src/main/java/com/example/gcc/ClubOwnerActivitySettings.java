@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -41,6 +42,10 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
     ClubOwner newClubOwner;
     String UUID;
     DatabaseReference dbClub;
+
+    public boolean validateClubName(String name) {
+        return !TextUtils.isDigitsOnly(name);
+    }
 
     public boolean validatePhoneNum(String phoneNum) {
         /**
@@ -188,33 +193,46 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
         chngSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateInstagramLink(editTextclubSocialMedia.getText().toString())){
-                    dbClub.child("clubsocial").setValue(editTextclubSocialMedia.getText().toString());
-                }
-                else {
+                String instagramLink = editTextclubSocialMedia.getText().toString();
+                String phoneNum = editTextclubNumber.getText().toString();
+                String email =  editTextclubEmail.getText().toString();
+                String clubName = editTextClubName.getText().toString();
+                boolean allSucceeded = true;
+
+                if (validateInstagramLink(instagramLink)){
+                    dbClub.child("clubsocial").setValue(instagramLink);
+                } else {
                     Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Instagram link.", Toast.LENGTH_SHORT).show();
+                    allSucceeded = false;
                 }
-                if (validatePhoneNum(editTextclubNumber.getText().toString())){
-                    dbClub.child("clubnumber").setValue(editTextclubNumber.getText().toString());
-                }
-                else {
+
+                if (validatePhoneNum(phoneNum)){
+                    dbClub.child("clubnumber").setValue(phoneNum);
+                } else {
                     Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Number.", Toast.LENGTH_SHORT).show();
+                    allSucceeded = false;
                 }
-                if (validateEmail(editTextclubEmail.getText().toString())){
-                    dbClub.child("clubemail").setValue(editTextclubEmail.getText().toString());
-                }
-                else {
+
+                if (validateEmail(email)){
+                    dbClub.child("clubemail").setValue(email);
+                } else {
                     Toast.makeText(ClubOwnerActivitySettings.this, "Try valid Email.", Toast.LENGTH_SHORT).show();
+                    allSucceeded = false;
+                }
+
+                if (validateClubName(clubName)) {
+                    dbClub.child("clubname").setValue(editTextClubName.getText().toString());
+                } else {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Choose a valid club name", Toast.LENGTH_SHORT).show();
+                    allSucceeded = false;
                 }
                 dbClub.child("clubdesc").setValue(editTextClubDesc.getText().toString());
-                dbClub.child("clubname").setValue(editTextClubName.getText().toString());
-
-
+                
+                if (allSucceeded) {
+                    Toast.makeText(ClubOwnerActivitySettings.this, "Updated info", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
