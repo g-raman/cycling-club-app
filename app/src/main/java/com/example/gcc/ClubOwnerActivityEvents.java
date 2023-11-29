@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,27 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
     ListView listViewEvents;
     DatabaseReference dbEvents;
     static String UUID;
+
+    public boolean validateEventName(String name) {
+        return !TextUtils.isEmpty(name);
+    }
+
+    public boolean validatePace(float pace, float min, float max) {
+        return pace >= min && pace <= max;
+    }
+
+    public boolean validateLevel(int level, int max) {
+        return level >= 0 && level <= max;
+    }
+
+    public boolean validateTime(String time) {
+        return !TextUtils.isEmpty(time);
+    }
+
+    public boolean validateLocation(String location) {
+        return !TextUtils.isEmpty(location);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +72,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot keysnapshot : snapshot.getChildren()) {
-                    if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())){
+                    if ((keysnapshot.child("username").getValue().toString()).equals(newClubOwner.getUsername())) {
                         UUID = keysnapshot.getKey().toString();
 
                         DatabaseReference chngeSettings = keyGet.child(UUID);
@@ -82,7 +105,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot newsnapshot) {
                                 events.clear();
-                                for (DataSnapshot postSnapshot : newsnapshot.getChildren()){
+                                for (DataSnapshot postSnapshot : newsnapshot.getChildren()) {
                                     List<User> users = new ArrayList<>();
 
                                     for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
@@ -120,6 +143,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -128,7 +152,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        newClubOwner = (ClubOwner)i.getSerializableExtra("USER");
+        newClubOwner = (ClubOwner) i.getSerializableExtra("USER");
 
         BottomNavigationView nav = findViewById(R.id.navClubOwner);
         nav.setSelectedItemId(R.id.nav_club_owner_events);
@@ -151,16 +175,13 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Event newEvent = events.get(i);
-                addEventDialog(false,newEvent);
+                addEventDialog(false, newEvent);
 
 
                 return true;
 
             }
         });
-
-
-
 
 
         Button addEvButton = findViewById(R.id.addEventBtn);
@@ -173,11 +194,9 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         });
 
 
-
-
     }
 
-    private void addEventDialog(Boolean creating, Event updateEvent){
+    private void addEventDialog(Boolean creating, Event updateEvent) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -195,7 +214,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 evTypeNames.clear(); // Clear the list before populating it again
-                for (DataSnapshot newsnapshot : snapshot.getChildren()){
+                for (DataSnapshot newsnapshot : snapshot.getChildren()) {
                     if (newsnapshot.child("status").getValue().toString().equals("true")) {
                         eventType event = newsnapshot.getValue(eventType.class);
                         evTypeNames.add(event);
@@ -221,8 +240,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         Button deleteEvent = dialogView.findViewById(R.id.clubOwnerDeleteEvent);
 
 
-
-        if (creating==false){
+        if (creating == false) {
 
             name.setText(updateEvent.getName());
             startTime.setText(updateEvent.getStartTime());
@@ -235,7 +253,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     break;
                 }
             }
-        } else if (creating){
+        } else if (creating) {
             deleteEvent.setVisibility(View.INVISIBLE);
         }
 
@@ -248,8 +266,8 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 eventType selectedEventType = (eventType) parent.getItemAtPosition(position);
-                pace.setHint("Pace (Min: "+selectedEventType.getPaceMin()+" / Max: "+selectedEventType.getPaceMax()+")");
-                level.setHint("Level (0 - "+selectedEventType.getLevel()+")");
+                pace.setHint("Pace (Min: " + selectedEventType.getPaceMin() + " / Max: " + selectedEventType.getPaceMax() + ")");
+                level.setHint("Level (0 - " + selectedEventType.getLevel() + ")");
 
             }
 
@@ -272,50 +290,87 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         });
 
 
-
         addEvent.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
                 DatabaseReference evadder = FirebaseDatabase.getInstance().getReference("clubs").child(UUID).child("events");
-                String eventID="";
-                if (creating==true) {
-                    eventID= evadder.push().getKey();
-                }
-                else if (!creating){
+                String eventID = "";
+                if (creating == true) {
+                    eventID = evadder.push().getKey();
+                } else if (!creating) {
                     eventID = updateEvent.getID();
                 }
 
 
                 eventType selectedEventType = (eventType) evTypeSpinner.getSelectedItem();
-                Log.d("TAG",selectedEventType.getName());
+                Log.d("RAMAN", selectedEventType.getName());
+
+                String eventName = name.getText().toString();
+                String locationString = location.getText().toString();
+                String paceString = pace.getText().toString();
+                String levelString = level.getText().toString();
+                String timeString = startTime.getText().toString();
+                float paceNum = 0;
+                int levelNum = 0;
+
+                float paceMax = selectedEventType.getPaceMax();
+                float paceMin = selectedEventType.getPaceMin();
+                int maxLevel = selectedEventType.getLevel();
+
                 try {
-                    if (Float.parseFloat(pace.getText().toString())>(selectedEventType.getPaceMin())
-                        && (Float.parseFloat(pace.getText().toString())<(selectedEventType.getPaceMax()))
-                        && (Integer.valueOf(level.getText().toString()))<=(selectedEventType.getLevel())) {
-                        evadder.child(eventID).child("pace").setValue((pace.getText().toString()));
-                        evadder.child(eventID).child("level").setValue(Integer.valueOf(level.getText().toString()));
-                        evadder.child(eventID).child("eventname").setValue(name.getText().toString());
-                        evadder.child(eventID).child("starttime").setValue(startTime.getText().toString());
-                        evadder.child(eventID).child("location").setValue(location.getText().toString());
-                        evadder.child(eventID).child("users").setValue(null);
-                        evadder.child(eventID).child("eventtype").setValue(selectedEventType);
-                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
-                        b.dismiss();
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "ensure values are within the correct bounds", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (Exception e) {
-                    Log.d("TAG", "BAD");
+                    paceNum = Float.parseFloat(paceString);
+                } catch (Exception ignored) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Pace must be a decimal value", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
+                try {
+                    levelNum = Integer.parseInt(levelString);
+                } catch (Exception ignored) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Level must be an integer", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validateEventName(eventName)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter valid event name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validateTime(timeString)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter valid time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validateLocation(locationString)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter valid location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validatePace(paceNum, paceMin, paceMax)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter pace between %.2f - %.2f", paceMin, paceMax), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!validateLevel(levelNum, maxLevel)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter 0 <= level <= %d", maxLevel), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                evadder.child(eventID).child("pace").setValue(paceString);
+                evadder.child(eventID).child("level").setValue(levelNum);
+                evadder.child(eventID).child("eventname").setValue(eventName);
+                evadder.child(eventID).child("starttime").setValue(timeString);
+                evadder.child(eventID).child("location").setValue(locationString);
+                evadder.child(eventID).child("users").setValue(null);
+                evadder.child(eventID).child("eventtype").setValue(selectedEventType);
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                b.dismiss();
             }
         });
-
-
     }
-    public static String getUUID(){ return UUID; }
 
-
+    public static String getUUID() {
+        return UUID;
+    }
 }
