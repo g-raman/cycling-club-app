@@ -242,6 +242,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         EditText location = dialogView.findViewById(R.id.clubOwnerEditLocation);
         EditText pace = dialogView.findViewById(R.id.clubOwnerEditPace);
         EditText level = dialogView.findViewById(R.id.clubOwnerEditLevel);
+        EditText MaxMembers = dialogView.findViewById(R.id.clubOwnerListSelectMembers);
         TextView typeText = dialogView.findViewById(R.id.textViewClubAddEvType);
         Button deleteEvent = dialogView.findViewById(R.id.clubOwnerDeleteEvent);
 
@@ -319,6 +320,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 String timeString = startTime.getText().toString();
                 float paceNum = 0;
                 int levelNum = 0;
+                int memNum = 0;
 
                 float paceMax = selectedEventType.getPaceMax();
                 float paceMin = selectedEventType.getPaceMin();
@@ -359,6 +361,12 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Level must be an integer", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                try {
+                    memNum = Integer.parseInt(MaxMembers.getText().toString());
+                } catch (Exception ignored) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Max members must be an integer", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if (!validateLevel(levelNum, maxLevel)) {
                     Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter level between 0-%d", maxLevel), Toast.LENGTH_SHORT).show();
@@ -372,6 +380,8 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 evadder.child(eventID).child("location").setValue(locationString);
                 evadder.child(eventID).child("users").setValue(null);
                 evadder.child(eventID).child("eventtype").setValue(selectedEventType);
+                evadder.child(eventID).child("eventmaxmem").setValue(memNum);
+
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                 b.dismiss();
             }
