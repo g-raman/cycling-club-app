@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -33,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClubOwnerActivityEvents extends AppCompatActivity {
 
@@ -54,7 +58,11 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
     }
 
     public boolean validateTime(String time) {
-        return !TextUtils.isEmpty(time);
+//        Pattern pattern = Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+        Pattern pattern = Pattern.compile("^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+        Matcher matcher = pattern.matcher(time);
+
+        return matcher.matches();
     }
 
     public boolean validateLocation(String location) {
@@ -147,8 +155,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-
-
         });
 
         Intent i = getIntent();
@@ -338,7 +344,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 }
 
                 if (!validateTime(timeString)) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter valid time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter time in 24H format", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
