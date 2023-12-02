@@ -16,6 +16,17 @@
         android:theme="@style/Theme.GCC"
         tools:targetApi="31">
         <activity
+            android:name=".UserSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserHomeActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name=".ClubOwnerActivitySettings"
             android:exported="false" />
         <activity

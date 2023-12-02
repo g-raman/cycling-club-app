@@ -3,10 +3,10 @@
     <item
         android:id="@+id/nav_club_owner_events"
         android:icon="@drawable/ic_bike"
-        android:title="Events" />
+        android:title="events" />
 
     <item
         android:id="@+id/nav_club_owner_settings"
         android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:title="settings" />
 </menu>
