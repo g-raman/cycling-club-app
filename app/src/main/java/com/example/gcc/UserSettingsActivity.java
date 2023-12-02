@@ -66,7 +66,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("password").exists()){
-                    userPwd.setText(snapshot.child("userPwd").getValue().toString());
+                    userPwd.setText(snapshot.child("password").getValue().toString());
                 }
                 if (snapshot.child("idealpace").exists()){
                     userPace.setText(snapshot.child("idealpace").getValue().toString());

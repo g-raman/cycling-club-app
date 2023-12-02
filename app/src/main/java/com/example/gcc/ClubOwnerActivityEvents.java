@@ -238,7 +238,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         //this is the database reference youll be using setvalue to
         final Button addEvent = dialogView.findViewById(R.id.clubOwnerCreateEvent);
         EditText name = dialogView.findViewById(R.id.clubOwnerEditEventname);
-        EditText startTime = dialogView.findViewById(R.id.clubOwnerEditStartTime);
+        EditText startTime = dialogView.findViewById(R.id.clubOwnerEditDate);
         EditText location = dialogView.findViewById(R.id.clubOwnerEditLocation);
         EditText pace = dialogView.findViewById(R.id.clubOwnerEditPace);
         EditText level = dialogView.findViewById(R.id.clubOwnerEditLevel);
