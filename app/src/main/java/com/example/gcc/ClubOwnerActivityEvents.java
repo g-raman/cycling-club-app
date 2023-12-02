@@ -32,7 +32,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -57,12 +62,26 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         return level >= 0 && level <= max;
     }
 
-    public boolean validateTime(String time) {
-//        Pattern pattern = Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
-        Pattern pattern = Pattern.compile("^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
-        Matcher matcher = pattern.matcher(time);
-
+    public boolean validateDateFormat(String date) {
+        Pattern pattern = Pattern.compile("^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\\d{2}$");
+        Matcher matcher = pattern.matcher(date);
         return matcher.matches();
+    }
+
+    public boolean validateDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+        Date date = null;
+        long unixTime = 0;
+
+        long currentUnixTime = System.currentTimeMillis() / 1000;
+        currentUnixTime = currentUnixTime - (currentUnixTime % 86400); // Remove the seconds from the current time
+
+        try {
+            date = dateFormat.parse(dateString);
+            unixTime = date.getTime() / 1000; // Convert milliseconds to seconds
+        } catch (Exception ignored) {}
+
+        return unixTime >= currentUnixTime;
     }
 
     public boolean validateLocation(String location) {
@@ -332,8 +351,13 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     return;
                 }
 
-                if (!validateTime(timeString)) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter time in 24H format", Toast.LENGTH_SHORT).show();
+                if (!validateDateFormat(timeString)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter date in (DD-MM-YY) format", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                if (!validateDate(timeString)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Date cannot be in past", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
