@@ -80,12 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 startActivity(clubOwnerMenu);
                                 finish();
                             } else if (role.equals("user")) {
+                                Intent userMenu = new Intent(RegisterActivity.this, UserHomeActivity.class);
                                 newUser = new User(password, role, username);
-                                welcomeActivity.putExtra("USER", newUser);
+                                userMenu.putExtra("USER", newUser);
+                                startActivity(userMenu);
+                                finish();
                             }
-                            welcomeActivity.putExtra("ROLE", role);
-                            startActivity(welcomeActivity);
-                            finish();
 
                         } else {
                             Toast.makeText(RegisterActivity.this, "Registration Failed, try a new username", Toast.LENGTH_SHORT).show();

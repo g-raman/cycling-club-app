@@ -5,14 +5,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -28,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,9 +57,10 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         return level >= 0 && level <= max;
     }
 
-    public boolean validateDate(String date) {
-        Pattern pattern = Pattern.compile("^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\\d{2}$");
-        Matcher matcher = pattern.matcher(date);
+    public boolean validateTime(String time) {
+//        Pattern pattern = Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+        Pattern pattern = Pattern.compile("^(0?[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+        Matcher matcher = pattern.matcher(time);
 
         return matcher.matches();
     }
@@ -230,11 +238,11 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         //this is the database reference youll be using setvalue to
         final Button addEvent = dialogView.findViewById(R.id.clubOwnerCreateEvent);
         EditText name = dialogView.findViewById(R.id.clubOwnerEditEventname);
-        EditText startTime = dialogView.findViewById(R.id.clubOwnerEditDate);
+        EditText startTime = dialogView.findViewById(R.id.clubOwnerEditStartTime);
         EditText location = dialogView.findViewById(R.id.clubOwnerEditLocation);
         EditText pace = dialogView.findViewById(R.id.clubOwnerEditPace);
         EditText level = dialogView.findViewById(R.id.clubOwnerEditLevel);
-        EditText maxMembers = dialogView.findViewById(R.id.clubOwnerEditNumMembers);
+        EditText MaxMembers = dialogView.findViewById(R.id.clubOwnerEditNumMembers);
         TextView typeText = dialogView.findViewById(R.id.textViewClubAddEvType);
         Button deleteEvent = dialogView.findViewById(R.id.clubOwnerDeleteEvent);
 
@@ -310,7 +318,6 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 String paceString = pace.getText().toString();
                 String levelString = level.getText().toString();
                 String timeString = startTime.getText().toString();
-                String memberCountString = maxMembers.getText().toString();
                 float paceNum = 0;
                 int levelNum = 0;
                 int memNum = 0;
@@ -325,8 +332,8 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     return;
                 }
 
-                if (!validateDate(timeString)) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter date in (DD-MM-YY) format", Toast.LENGTH_SHORT).show();
+                if (!validateTime(timeString)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Enter time in 24H format", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -354,20 +361,17 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Level must be an integer", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
-                if (!validateLevel(levelNum, maxLevel)) {
-                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter level between 0-%d", maxLevel), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 try {
-                    memNum = Integer.parseInt(memberCountString);
+                    memNum = Integer.parseInt(MaxMembers.getText().toString());
                 } catch (Exception ignored) {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Max members must be an integer", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                if (!validateLevel(levelNum, maxLevel)) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, String.format("Enter level between 0-%d", maxLevel), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 evadder.child(eventID).child("pace").setValue(paceString);
                 evadder.child(eventID).child("level").setValue(levelNum);

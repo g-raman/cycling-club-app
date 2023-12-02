@@ -91,10 +91,9 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(clubOwnerMenu);
                         finish();
                     } else if (role.equals("user")) {
-                        Intent userMenu = new Intent(LoginActivity.this, WelcomeActivity.class);
+                        Intent userMenu = new Intent(LoginActivity.this, UserHomeActivity.class);
                         newUser = new User(password, role, username);
                         userMenu.putExtra("USER", newUser);
-                        userMenu.putExtra("ROLE", role);
                         startActivity(userMenu);
                         finish();
                     }
