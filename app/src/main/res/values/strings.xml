@@ -45,4 +45,5 @@
     <string name="min">Min</string>
     <string name="max">Max</string>
     <string name="clubOwnersettingsBtn">Change Settings</string>
+    <string name="usersettingsbtn">Change Settings</string>
 </resources>
