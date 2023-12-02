@@ -89,14 +89,14 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:backgroundTint="@color/primary"
-        app:layout_constraintBottom_toTopOf="@+id/accountType"
+        app:layout_constraintBottom_toTopOf="@+id/searchBarFilter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
 
     <RadioGroup
-        android:id="@+id/accountType"
+        android:id="@+id/searchBarFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -142,7 +142,7 @@
         app:layout_constraintBottom_toTopOf="@+id/nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountType" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBarFilter" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"

@@ -106,7 +106,7 @@ public class AdminActivityUsers extends AppCompatActivity {
                 EditText usernameField = findViewById(R.id.editTextUsername);
                 EditText passwordField = findViewById(R.id.editTextPassword);
 
-                RadioGroup radioGroup = findViewById(R.id.accountType);
+                RadioGroup radioGroup = findViewById(R.id.searchBarFilter);
                 int checkedBtnId = radioGroup.getCheckedRadioButtonId();
                 RadioButton checkedBtn = findViewById(checkedBtnId);
                 String checkedRole = checkedBtn.getText().toString();

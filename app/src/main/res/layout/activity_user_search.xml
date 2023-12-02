@@ -6,6 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".UserSearchActivity">
 
+    <View
+        android:id="@+id/SearchPage"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/SearchPage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search clubs or events here:  " />
+
+    <RadioGroup
+        android:id="@+id/searchBarFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:paddingStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchPage">
+
+        <RadioButton
+            android:id="@+id/EventType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:padding="10dp"
+            android:paddingStart="0dp"
+            android:text="Event Type"
+            app:buttonTint="@color/primary" />
+
+        <RadioButton
+            android:id="@+id/ClubName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:paddingStart="0dp"
+            android:text="Club "
+            app:buttonTint="@color/primary" />
+    </RadioGroup>
+
+    <ListView
+        android:id="@+id/listOfClubsorEvents"
+        android:layout_width="335dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/navUser"
+        app:layout_constraintEnd_toEndOf="@id/navUser"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBarFilter" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navUser"
         android:layout_width="match_parent"
@@ -23,5 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_user" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

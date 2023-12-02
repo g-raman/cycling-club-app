@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordRegister" />
 
     <RadioGroup
-        android:id="@+id/accountType"
+        android:id="@+id/searchBarFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -115,7 +115,7 @@
             app:buttonTint="@color/primary" />
 
         <RadioButton
-            android:id="@+id/roleOwner"
+            android:id="@+id/ClubName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -140,7 +140,7 @@
         app:backgroundTint="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountType" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBarFilter" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -22,8 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.Serializable;
-
 
 public class RegisterActivity extends AppCompatActivity {
     interface callBack {
@@ -50,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText usernameField = findViewById(R.id.usernameRegister);
                 EditText passwordField = findViewById(R.id.passwordRegister);
 
-                RadioGroup radioGroup = findViewById(R.id.accountType);
+                RadioGroup radioGroup = findViewById(R.id.searchBarFilter);
                 int checkedBtnId = radioGroup.getCheckedRadioButtonId();
                 RadioButton checkedBtn = findViewById(checkedBtnId);
                 String checkedRole = checkedBtn.getText().toString();
