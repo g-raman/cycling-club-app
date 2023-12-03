@@ -23,6 +23,20 @@ public class Helper {
     */
     private final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
 
+    public boolean validatePassword(String password) {
+        Pattern pattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{6,}$");
+        Matcher matcher = pattern.matcher(password);
+
+        return matcher.matches();
+    }
+
+    public boolean validatePace(double pace) {
+        return pace > 0 && pace <= 30;
+    }
+
+    public boolean validateAge(int age) {
+        return age > 0 && age <= 80;
+    }
 
     public boolean validatePhoneNum(String phoneNum) {
         /**
