@@ -20,7 +20,7 @@
     <string name="role">role</string>
 
     <string name="passwordRequirements">
-        Must include: \n
+        Password Must include: \n
         One letter. \n
         One digit. \n
         One special character (@, #, $, %, ^, &amp;, +, or =). \n
