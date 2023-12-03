@@ -1,11 +1,21 @@
 package com.example.gcc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserHomeActivity extends AppCompatActivity {
@@ -42,5 +52,50 @@ public class UserHomeActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        ListView joinedEv = findViewById(R.id.listJoinedEventsView);
+        DatabaseReference joinedEvDBREF = FirebaseDatabase.getInstance().getReference("users").child(newUser.getUsername()).child("joinedevents");
+        List<Event> events = new ArrayList<>();
+        joinedEvDBREF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                events.clear();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                    List<User> users = new ArrayList<>();
+
+                    for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
+                        users.add(nestedSnapshot.getValue(User.class));
+                    }
+                    if (postSnapshot.hasChild("eventname") && postSnapshot.hasChild("starttime") && postSnapshot.hasChild("location") && postSnapshot.hasChild("pace") && postSnapshot.hasChild("level") && postSnapshot.hasChild("eventtype")) {
+                        User[] usersArr = users.toArray(new User[0]);
+                        String newevname = postSnapshot.child("eventname").getValue().toString();
+                        String starttime = postSnapshot.child("starttime").getValue().toString();
+                        String loc = postSnapshot.child("location").getValue().toString();
+                        Float newpace = Float.parseFloat(postSnapshot.child("pace").getValue().toString());
+                        Integer level = Integer.parseInt(postSnapshot.child("level").getValue().toString());
+                        eventType evtype = postSnapshot.child("eventtype").getValue(eventType.class);
+                        Event newEvent = new Event(newevname,
+                                evtype,
+                                usersArr,
+                                starttime,
+                                loc,
+                                newpace,
+                                level,
+                                postSnapshot.getKey());
+                        events.add(newEvent);
+                    }
+
+                }
+                joinedEventsList eventAdapter = new joinedEventsList(UserHomeActivity.this,events, newUser);
+                joinedEv.setAdapter(eventAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

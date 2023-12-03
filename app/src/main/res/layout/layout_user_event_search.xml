@@ -42,21 +42,21 @@
         app:layout_constraintTop_toBottomOf="@+id/eventNameContainer">
 
         <TextView
-            android:id="@+id/minAgeLabel"
+            android:id="@+id/EventTypeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="130dp"
             android:padding="4dp"
-            android:text="Ideal Age:"
+            android:text="Event Type: "
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewMinAge"
+            android:id="@+id/textViewEventType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:text="Min Age"
+            android:text="Event Type"
             android:textAlignment="textStart"
             android:textSize="20sp" />
     </LinearLayout>
