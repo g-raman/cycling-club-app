@@ -5,7 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -33,6 +42,7 @@ public class joinedEventsList extends ArrayAdapter<Event> {
         TextView EvLoc = (TextView) clubListItem.findViewById(R.id.textViewLayoutEventListLocationJoined);
         TextView EvPace = (TextView) clubListItem.findViewById(R.id.textViewLayoutEventListPaceJoined);
         TextView EvLevel = (TextView) clubListItem.findViewById(R.id.textViewLayoutEventListLevelJoined);
+        Button leaveEv = (Button) clubListItem.findViewById(R.id.leaveEvent);
 
         Event newEv = events.get(position);
 
@@ -43,8 +53,41 @@ public class joinedEventsList extends ArrayAdapter<Event> {
         EvPace.setText(newEv.getPace().toString());
         EvLevel.setText(newEv.getLevel().toString());
 
+        leaveEv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return  clubListItem;
 
 
+    }
+
+    private void leaveEvent(Event evLeave){
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUsername()).child("joinedevents").child(evLeave.getID());
+        DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("clubs");
+        dbRef.removeValue();
+        dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot newSnap : snapshot.getChildren()){
+                    if (snapshot.child("events").hasChildren()) {
+                        for (DataSnapshot events : snapshot.child("events").getChildren()) {
+                            if (events.getKey().toString().equals(evLeave.getID())){
+                                dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).removeValue();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
