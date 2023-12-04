@@ -34,8 +34,6 @@ public class UserSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search);
 
-
-
         Intent i = getIntent();
         newUser = (User) i.getSerializableExtra("USER");
 
@@ -84,11 +82,12 @@ public class UserSearchActivity extends AppCompatActivity {
                             for (DataSnapshot clubs : snapshot.getChildren()) {
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(newUser.getUsername()).child("comments");
                                 String clubName = clubs.child("clubname").getValue().toString();
-                                int clubRating=0;
+                                int clubRating = 0;
                                 if (clubs.child("ratings").exists()) {
                                     for (DataSnapshot ratings : clubs.child("ratings").getChildren()) {
                                         if (ratings.child("rating").exists()) {
-                                            clubRating += Integer.parseInt((String) ratings.child("rating").getValue());
+                                            int rating = Math.toIntExact((Long) ratings.child("rating").getValue());
+                                            clubRating += rating;
                                         }
                                     }
                                     if (clubs.child("ratings").child("rating").exists()) {
