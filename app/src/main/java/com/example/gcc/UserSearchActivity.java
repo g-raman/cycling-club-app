@@ -87,7 +87,9 @@ public class UserSearchActivity extends AppCompatActivity {
                                 Integer clubRating=0;
                                 if (clubs.child("ratings").exists()) {
                                     for (DataSnapshot ratings : clubs.child("ratings").getChildren()) {
-                                        clubRating += Integer.parseInt((String) ratings.child("rating").getValue());
+                                        if (!ratings.child("rating").exists()) {
+                                            clubRating += Integer.parseInt((String) ratings.child("rating").getValue());
+                                        }
                                     }
                                     clubRating= Math.toIntExact(clubRating / (clubs.child("ratings").getChildrenCount()));
                                 } else {
