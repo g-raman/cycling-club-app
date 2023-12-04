@@ -62,13 +62,9 @@ public class UserHomeActivity extends AppCompatActivity {
                 events.clear();
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()){
-                    List<User> users = new ArrayList<>();
 
-                    for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
-                        users.add(nestedSnapshot.getValue(User.class));
-                    }
                     if (postSnapshot.hasChild("eventname") && postSnapshot.hasChild("starttime") && postSnapshot.hasChild("location") && postSnapshot.hasChild("pace") && postSnapshot.hasChild("level") && postSnapshot.hasChild("eventtype")) {
-                        User[] usersArr = users.toArray(new User[0]);
+                        User[] usersArr = new User[0];
                         String newevname = postSnapshot.child("eventname").getValue().toString();
                         String starttime = postSnapshot.child("starttime").getValue().toString();
                         String loc = postSnapshot.child("location").getValue().toString();

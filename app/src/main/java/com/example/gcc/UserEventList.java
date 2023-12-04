@@ -64,14 +64,19 @@ public class UserEventList extends ArrayAdapter<Event> {
     private void userJoinEvent(Event evJoin){
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUsername()).child("joinedevents").child(evJoin.getID());
         DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("clubs");
-        dbRef.setValue(evJoin);
+        dbRef.child("eventname").setValue(evJoin.getName());
+        dbRef.child("eventtype").setValue(evJoin.getType());
+        dbRef.child("level").setValue(evJoin.getLevel());
+        dbRef.child("pace").setValue(evJoin.getPace());
+        dbRef.child("location").setValue(evJoin.getLocation());
+        dbRef.child("starttime").setValue(evJoin.getStartTime());
 
         dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot newSnap : snapshot.getChildren()){
-                    if (snapshot.child("events").hasChildren()) {
-                        for (DataSnapshot events : snapshot.child("events").getChildren()) {
+                    if (newSnap.child("events").hasChildren()) {
+                        for (DataSnapshot events : newSnap.child("events").getChildren()) {
                             if (events.getKey().toString().equals(evJoin.getID())){
                                 dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).setValue(user);
                                 break;

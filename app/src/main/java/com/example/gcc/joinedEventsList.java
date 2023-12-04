@@ -56,7 +56,7 @@ public class joinedEventsList extends ArrayAdapter<Event> {
         leaveEv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                leaveEvent(newEv);
             }
         });
 
@@ -73,8 +73,8 @@ public class joinedEventsList extends ArrayAdapter<Event> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot newSnap : snapshot.getChildren()){
-                    if (snapshot.child("events").hasChildren()) {
-                        for (DataSnapshot events : snapshot.child("events").getChildren()) {
+                    if (newSnap.child("events").hasChildren()) {
+                        for (DataSnapshot events : newSnap.child("events").getChildren()) {
                             if (events.getKey().toString().equals(evLeave.getID())){
                                 dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).removeValue();
                                 break;

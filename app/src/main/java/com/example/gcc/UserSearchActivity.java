@@ -84,16 +84,20 @@ public class UserSearchActivity extends AppCompatActivity {
                             for (DataSnapshot clubs : snapshot.getChildren()) {
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(newUser.getUsername()).child("comments");
                                 String clubName = clubs.child("clubname").getValue().toString();
-                                String clubRating = "";
-                                if (clubs.child("clubrating").exists()) {
-                                    clubRating = clubs.child("clubrating").getValue().toString();
+                                Integer clubRating=0;
+                                if (clubs.child("ratings").exists()) {
+                                    for (DataSnapshot ratings : clubs.child("ratings").getChildren()) {
+                                        clubRating += Integer.parseInt((String) ratings.child("rating").getValue());
+                                    }
+                                    clubRating= Math.toIntExact(clubRating / (clubs.child("ratings").getChildrenCount()));
                                 } else {
-                                    clubRating = "0 - 0";
+                                    clubRating = 0;
                                 }
                                 Club newClub = new Club(clubName, clubRating);
+                                newClub.setID(clubs.getKey().toString());
                                 clubsList.add(newClub);
                             }
-                            ClubList eventAdaptor = new ClubList(UserSearchActivity.this, clubsList);
+                            ClubList eventAdaptor = new ClubList(UserSearchActivity.this, clubsList, newUser.getUsername());
                             clubEvList.setAdapter(eventAdaptor);
                         } else if (position==1) {
                             eventList.clear();
@@ -173,7 +177,7 @@ public class UserSearchActivity extends AppCompatActivity {
                             filteredClubs.add(club);
                         }
                     }
-                    ClubList eventAdapter = new ClubList(UserSearchActivity.this, filteredClubs);
+                    ClubList eventAdapter = new ClubList(UserSearchActivity.this, filteredClubs, newUser.getUsername());
                     clubEvList.setAdapter(eventAdapter);
                 }
 
