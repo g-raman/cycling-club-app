@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -79,7 +80,8 @@ public class ClubList extends ArrayAdapter<Club> {
             @Override
             public void onClick(View v) {
                 clubRef.child("comment").setValue(addComment.getText().toString());
-                clubRef.child("rating").setValue(ratingLevel.getSelectedItemPosition()-1);
+                clubRef.child("rating").setValue(ratingLevel.getSelectedItemPosition() + 1);
+                alertDialog.dismiss();
             }
         });
     }
