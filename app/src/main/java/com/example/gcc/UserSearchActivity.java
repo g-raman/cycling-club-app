@@ -84,19 +84,19 @@ public class UserSearchActivity extends AppCompatActivity {
                             for (DataSnapshot clubs : snapshot.getChildren()) {
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(newUser.getUsername()).child("comments");
                                 String clubName = clubs.child("clubname").getValue().toString();
-                                Integer clubRating=0;
+                                int clubRating=0;
                                 if (clubs.child("ratings").exists()) {
                                     for (DataSnapshot ratings : clubs.child("ratings").getChildren()) {
-                                        if (!ratings.child("rating").exists()) {
+                                        if (ratings.child("rating").exists()) {
                                             clubRating += Integer.parseInt((String) ratings.child("rating").getValue());
                                         }
                                     }
-                                    clubRating= Math.toIntExact(clubRating / (clubs.child("ratings").getChildrenCount()));
-                                } else {
-                                    clubRating = 0;
+                                    if (clubs.child("ratings").child("rating").exists()) {
+                                        clubRating = Math.toIntExact((clubRating / (clubs.child("ratings").getChildrenCount())));
+                                    }
                                 }
                                 Club newClub = new Club(clubName, clubRating);
-                                newClub.setID(clubs.getKey().toString());
+                                newClub.setID(clubs.getKey());
                                 clubsList.add(newClub);
                             }
                             ClubList eventAdaptor = new ClubList(UserSearchActivity.this, clubsList, newUser.getUsername());

@@ -41,7 +41,7 @@ public class ClubList extends ArrayAdapter<Club> {
         Club newClub = clubs.get(position);
 
         clubName.setText(newClub.getName());
-        clubRating.setText(newClub.getRating());
+        clubRating.setText(newClub.getRating().toString());
 
         Button addRating = (Button) clubListItem.findViewById(R.id.addRatingBtn);
 
