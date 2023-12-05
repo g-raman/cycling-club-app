@@ -78,12 +78,12 @@ public class UserEventList extends ArrayAdapter<Event> {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (evJoin.getPace() > Float.parseFloat((String) snapshot.child("idealpace").getValue())) {
+                if (evJoin.getPace() > Float.parseFloat((String) snapshot.child("idealpace").getValue().toString())) {
                     Toast.makeText(context, "You do not meet pace requirements", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (evJoin.getLevel() > Integer.parseInt((String) snapshot.child("userLevel").getValue())) {
+                if (evJoin.getLevel() > Integer.parseInt((String) snapshot.child("userLevel").getValue().toString())) {
                     Toast.makeText(context, "You do not meet level requirements", Toast.LENGTH_SHORT).show();
                     return;
                 }
