@@ -136,7 +136,8 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                                     List<User> users = new ArrayList<>();
 
                                     for (DataSnapshot nestedSnapshot : postSnapshot.child("users").getChildren()) {
-                                        users.add(nestedSnapshot.getValue(User.class));
+                                        User testUser = new User(nestedSnapshot.child("password").getValue().toString(),nestedSnapshot.child("role").getValue().toString(),nestedSnapshot.child("username").getValue().toString());
+                                        users.add(testUser);
                                     }
                                     if (postSnapshot.hasChild("eventname") && postSnapshot.hasChild("starttime") && postSnapshot.hasChild("location") && postSnapshot.hasChild("pace") && postSnapshot.hasChild("level") && postSnapshot.hasChild("eventtype")) {
                                         User[] usersArr = users.toArray(new User[0]);

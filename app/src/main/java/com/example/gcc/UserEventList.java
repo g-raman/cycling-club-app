@@ -94,7 +94,7 @@ public class UserEventList extends ArrayAdapter<Event> {
                             if (newSnap.child("events").hasChildren()) {
                                 for (DataSnapshot events : newSnap.child("events").getChildren()) {
                                     if (events.getKey().toString().equals(evJoin.getID())) {
-                                        dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).setValue(user);
+                                        dbClub.child(newSnap.getKey()).child("events").child(evJoin.getID()).child("users").child(user.getUsername()).setValue(user);
                                         break;
                                     }
                                 }

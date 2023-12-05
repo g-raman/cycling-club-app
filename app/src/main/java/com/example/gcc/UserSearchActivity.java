@@ -90,15 +90,15 @@ public class UserSearchActivity extends AppCompatActivity {
                                 String clubName = clubs.child("clubname").getValue().toString();
                                 int clubRating = 0;
                                 if (clubs.child("ratings").exists()) {
+                                    int count = 0;
                                     for (DataSnapshot ratings : clubs.child("ratings").getChildren()) {
                                         if (ratings.child("rating").exists()) {
                                             int rating = Math.toIntExact((Long) ratings.child("rating").getValue());
                                             clubRating += rating;
+                                            count+=1;
                                         }
                                     }
-                                    if (clubs.child("ratings").child("rating").exists()) {
-                                        clubRating = Math.toIntExact((clubRating / (clubs.child("ratings").getChildrenCount())));
-                                    }
+                                    clubRating= clubRating / count;
                                 }
                                 Club newClub = new Club(clubName, clubRating);
                                 newClub.setID(clubs.getKey());
