@@ -61,6 +61,7 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 events.clear();
 
+
                 for (DataSnapshot postSnapshot : snapshot.getChildren()){
 
                     if (postSnapshot.hasChild("eventname") && postSnapshot.hasChild("starttime") && postSnapshot.hasChild("location") && postSnapshot.hasChild("pace") && postSnapshot.hasChild("level") && postSnapshot.hasChild("eventtype")) {

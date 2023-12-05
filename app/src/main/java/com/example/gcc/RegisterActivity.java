@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 startActivity(clubOwnerMenu);
                                 finish();
                             } else if (role.equals("user")) {
-                                Intent userMenu = new Intent(RegisterActivity.this, UserHomeActivity.class);
+                                Intent userMenu = new Intent(RegisterActivity.this, UserSettingsActivity.class);
                                 newUser = new User(password, role, username);
                                 userMenu.putExtra("USER", newUser);
                                 startActivity(userMenu);

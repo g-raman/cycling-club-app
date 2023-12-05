@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,6 +63,10 @@ public class UserSettingsActivity extends AppCompatActivity {
         EditText userPwd = findViewById(R.id.userPassword);
         EditText userPace = findViewById(R.id.userPace);
         EditText userAge = findViewById(R.id.userAge);
+        Menu menu = nav.getMenu();
+
+        MenuItem menuItem = menu.findItem(R.id.nav_user_search);
+        MenuItem menuItem2 = menu.findItem(R.id.nav_user_home);
 
         userSettings.addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,14 +74,34 @@ public class UserSettingsActivity extends AppCompatActivity {
                 if (snapshot.child("password").exists()){
                     userPwd.setText(snapshot.child("password").getValue().toString());
                 }
+                else {
+                    menuItem.setVisible(false);
+                    menuItem2.setVisible(false);
+                }
                 if (snapshot.child("idealpace").exists()){
                     userPace.setText(snapshot.child("idealpace").getValue().toString());
+                }
+                else {
+                    menuItem.setVisible(false);
+                    menuItem2.setVisible(false);
                 }
                 if (snapshot.child("userAge").exists()){
                     userAge.setText(snapshot.child("userAge").getValue().toString());
                 }
+                else {
+                    menuItem.setVisible(false);
+                    menuItem2.setVisible(false);
+                }
                 if (snapshot.child("userLevel").exists()){
-                    level.setSelection(Integer.valueOf(snapshot.child("userAge").getValue().toString())-1);
+                    level.setSelection(Integer.valueOf(snapshot.child("userLevel").getValue().toString())-1);
+                }
+                else {
+                    menuItem.setVisible(false);
+                    menuItem2.setVisible(false);
+                }
+                if ((snapshot.child("password").exists() && snapshot.child("idealpace").exists() && snapshot.child("userAge").exists()) && snapshot.child("userLevel").exists()){
+                    menuItem.setVisible(true);
+                    menuItem2.setVisible(true);
                 }
             }
 
