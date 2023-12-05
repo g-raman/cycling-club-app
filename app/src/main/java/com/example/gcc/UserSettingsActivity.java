@@ -54,6 +54,12 @@ public class UserSettingsActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
+            } else if (item.getItemId() == R.id.nav_user_logout) {
+                Intent userSearch = new Intent(UserSettingsActivity.this, LoginActivity.class);
+                startActivity(userSearch);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                return true;
             }
             return false;
         });
