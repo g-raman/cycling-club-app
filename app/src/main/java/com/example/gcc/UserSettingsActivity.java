@@ -121,8 +121,23 @@ public class UserSettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Helper helper = new Helper();
                 String password = userPwd.getText().toString();
-                float pace = Float.parseFloat(userPace.getText().toString());
-                int age = Integer.parseInt(userAge.getText().toString());
+                float pace = 0;
+                int age = 0;
+
+                try {
+                    pace = Float.parseFloat(userPace.getText().toString());
+                } catch (Exception ignored) {
+                    Toast.makeText(UserSettingsActivity.this, "Pace must be a decimal number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    age = Integer.parseInt(userAge.getText().toString());
+                } catch (Exception ignored) {
+                    Toast.makeText(UserSettingsActivity.this, "Age must be an integer", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int idealLevel = level.getSelectedItemPosition() + 1;
 
                 boolean validPassword = helper.validatePassword(password);
