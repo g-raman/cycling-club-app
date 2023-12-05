@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -54,6 +55,16 @@ public class UserEventList extends ArrayAdapter<Event> {
         joinEvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (newEvent.getPace() > user.getPreferredPace()) {
+                    Toast.makeText(context, "You do not meet pace requirements", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                if (newEvent.getLevel() > user.getPreferredLevel()) {
+                    Toast.makeText(context, "You do not meet the level requirements", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 userJoinEvent(newEvent);
             }
         });
@@ -92,5 +103,6 @@ public class UserEventList extends ArrayAdapter<Event> {
             }
         });
 
+        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
     }
 }
