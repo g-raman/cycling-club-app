@@ -59,8 +59,8 @@ public class AdminActivityUsers extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
-            } else if (item.getItemId() == R.id.nav_settings) {
-                startActivity(new Intent(getApplicationContext(), AdminActivitySettings.class));
+            } else if (item.getItemId() == R.id.nav_logout) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;

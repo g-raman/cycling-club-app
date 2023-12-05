@@ -48,9 +48,6 @@
             android:name=".AdminActivityClubs"
             android:exported="false" />
         <activity
-            android:name=".AdminActivitySettings"
-            android:exported="false" />
-        <activity
             android:name=".clubOwnerMainMenu"
             android:exported="false" />
         <activity
