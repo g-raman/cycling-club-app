@@ -9,4 +9,9 @@
         android:id="@+id/nav_club_owner_settings"
         android:icon="@drawable/ic_settings"
         android:title="settings" />
+
+    <item
+        android:id="@+id/nav_club_owner_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="settings" />
 </menu>

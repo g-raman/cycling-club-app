@@ -103,6 +103,12 @@ public class ClubOwnerActivitySettings extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 return true;
+            } else if (item.getItemId() == R.id.nav_club_owner_logout) {
+                Intent logout = new Intent(ClubOwnerActivitySettings.this, LoginActivity.class);
+                startActivity(logout);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                return true;
             }
             return false;
         });
