@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 finish();
                             } else if (role.equals("user")) {
                                 Intent userMenu = new Intent(RegisterActivity.this, UserSettingsActivity.class);
-                                newUser = new User(password, role, username, 0, 0);
+                                newUser = new User(password, role, username);
                                 userMenu.putExtra("USER", newUser);
                                 startActivity(userMenu);
                                 finish();

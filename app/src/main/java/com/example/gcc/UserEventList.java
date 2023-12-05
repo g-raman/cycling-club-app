@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserEventList extends ArrayAdapter<Event> {
 
@@ -55,15 +56,7 @@ public class UserEventList extends ArrayAdapter<Event> {
         joinEvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newEvent.getPace() > user.getPreferredPace()) {
-                    Toast.makeText(context, "You do not meet pace requirements", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                
-                if (newEvent.getLevel() > user.getPreferredLevel()) {
-                    Toast.makeText(context, "You do not meet the level requirements", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
 
                 userJoinEvent(newEvent);
             }
@@ -72,8 +65,9 @@ public class UserEventList extends ArrayAdapter<Event> {
         return  clubListItem;
     }
 
-    private void userJoinEvent(Event evJoin){
+    private void userJoinEvent(Event evJoin) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUsername()).child("joinedevents").child(evJoin.getID());
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUsername());
         DatabaseReference dbClub = FirebaseDatabase.getInstance().getReference("clubs");
         dbRef.child("eventname").setValue(evJoin.getName());
         dbRef.child("eventtype").setValue(evJoin.getType());
@@ -81,20 +75,40 @@ public class UserEventList extends ArrayAdapter<Event> {
         dbRef.child("pace").setValue(evJoin.getPace());
         dbRef.child("location").setValue(evJoin.getLocation());
         dbRef.child("starttime").setValue(evJoin.getStartTime());
-
-        dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot newSnap : snapshot.getChildren()){
-                    if (newSnap.child("events").hasChildren()) {
-                        for (DataSnapshot events : newSnap.child("events").getChildren()) {
-                            if (events.getKey().toString().equals(evJoin.getID())){
-                                dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).setValue(user);
-                                break;
+                if (evJoin.getPace() > Float.parseFloat((String) snapshot.child("idealpace").getValue())) {
+                    Toast.makeText(context, "You do not meet pace requirements", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (evJoin.getLevel() > Integer.parseInt((String) snapshot.child("userLevel").getValue())) {
+                    Toast.makeText(context, "You do not meet level requirements", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                dbClub.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot newSnap : snapshot.getChildren()) {
+                            if (newSnap.child("events").hasChildren()) {
+                                for (DataSnapshot events : newSnap.child("events").getChildren()) {
+                                    if (events.getKey().toString().equals(evJoin.getID())) {
+                                        dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).setValue(user);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
-                }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -103,6 +117,5 @@ public class UserEventList extends ArrayAdapter<Event> {
             }
         });
 
-        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
     }
 }
