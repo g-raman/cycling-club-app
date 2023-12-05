@@ -1,5 +1,6 @@
 package com.example.gcc.utils;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import com.example.gcc.RegisterActivity;
@@ -23,6 +24,8 @@ public class Helper {
     */
     private final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
 
+    public Helper() {}
+    public Helper(Context context) {}
     public boolean validatePassword(String password) {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
         Matcher matcher = pattern.matcher(password);
