@@ -336,8 +336,12 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                 }
 
 
+                Object selectedItem = evTypeSpinner.getSelectedItem();
+                if (Objects.isNull(String.valueOf(selectedItem))) {
+                    Toast.makeText(ClubOwnerActivityEvents.this, "Select event type", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 eventType selectedEventType = (eventType) evTypeSpinner.getSelectedItem();
-                Log.d("RAMAN", selectedEventType.getName());
 
                 String eventName = name.getText().toString();
                 String locationString = location.getText().toString();
