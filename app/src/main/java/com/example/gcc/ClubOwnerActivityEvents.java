@@ -242,7 +242,24 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
         EventTypeAdapter typeAdapter = new EventTypeAdapter(this, android.R.layout.simple_spinner_dropdown_item, evTypeNames);
         evTypeSpinner.setAdapter(typeAdapter);
 
+        evtype.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                evTypeNames.clear(); // Clear the list before populating it again
+                for (DataSnapshot newsnapshot : snapshot.getChildren()) {
+                    if (newsnapshot.child("status").getValue().toString().equals("true")) {
+                        eventType event = newsnapshot.getValue(eventType.class);
+                        evTypeNames.add(event);
+                    }
+                }
+                typeAdapter.notifyDataSetChanged(); // Notify the adapter of changes in the data
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled event
+            }
+        });
 
         //this is the database reference youll be using setvalue to
         final Button addEvent = dialogView.findViewById(R.id.clubOwnerCreateEvent);
@@ -263,31 +280,12 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
             location.setText(updateEvent.getLocation());
             pace.setText(updateEvent.getPace().toString());
             level.setText((updateEvent.getLevel().toString()));
-            evtype.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    evTypeNames.clear(); // Clear the list before populating it again
-                    for (DataSnapshot newsnapshot : snapshot.getChildren()) {
-                        if (newsnapshot.child("status").getValue().toString().equals("true")) {
-                            eventType event = newsnapshot.getValue(eventType.class);
-                            evTypeNames.add(event);
-                        }
-                    }
-                    typeAdapter.notifyDataSetChanged(); // Notify the adapter of changes in the data
-                    for (int i = 0; i < evTypeNames.size(); i++) {
-                        if (evTypeNames.get(i).equals(updateEvent.getType())) {
-                            evTypeSpinner.setSelection(i);
-                            break;
-                        }
-                    }
+            for (int i = 0; i < evTypeNames.size(); i++) {
+                if (evTypeNames.get(i).equals(updateEvent.getType())) {
+                    evTypeSpinner.setSelection(i);
+                    break;
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle onCancelled event
-                }
-            });
-
+            }
         } else if (creating) {
             deleteEvent.setVisibility(View.INVISIBLE);
         }
@@ -364,7 +362,7 @@ public class ClubOwnerActivityEvents extends AppCompatActivity {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Enter date in (DD-MM-YY) format", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 if (!validateDate(timeString)) {
                     Toast.makeText(ClubOwnerActivityEvents.this, "Date cannot be in past", Toast.LENGTH_SHORT).show();
                     return;
