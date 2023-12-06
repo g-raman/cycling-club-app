@@ -87,7 +87,10 @@ public class UserSearchActivity extends AppCompatActivity {
                             clubsList.clear();
                             for (DataSnapshot clubs : snapshot.getChildren()) {
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(newUser.getUsername()).child("comments");
-                                String clubName = clubs.child("clubname").getValue().toString();
+                                Object clubNameSnapShot = clubs.child("clubname").getValue();
+                                if (clubNameSnapShot == null) continue;
+                                String clubName = clubNameSnapShot.toString();
+
                                 int clubRating = 0;
                                 if (clubs.child("ratings").exists()) {
                                     int count = 0;
