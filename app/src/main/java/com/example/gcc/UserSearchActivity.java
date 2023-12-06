@@ -98,7 +98,9 @@ public class UserSearchActivity extends AppCompatActivity {
                                             count+=1;
                                         }
                                     }
-                                    clubRating= clubRating / count;
+                                    if (count != 0) {
+                                        clubRating= clubRating / count;
+                                    }
                                 }
                                 Club newClub = new Club(clubName, clubRating);
                                 newClub.setID(clubs.getKey());

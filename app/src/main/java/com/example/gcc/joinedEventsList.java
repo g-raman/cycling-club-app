@@ -76,7 +76,7 @@ public class joinedEventsList extends ArrayAdapter<Event> {
                     if (newSnap.child("events").hasChildren()) {
                         for (DataSnapshot events : newSnap.child("events").getChildren()) {
                             if (events.getKey().toString().equals(evLeave.getID())){
-                                dbClub.child(newSnap.getKey()).child("events").child("users").child(user.getUsername()).removeValue();
+                                dbClub.child(newSnap.getKey()).child("events").child(evLeave.getID()).child("users").child(user.getUsername()).removeValue();
                                 break;
                             }
                         }
